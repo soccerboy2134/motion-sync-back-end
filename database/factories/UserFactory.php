@@ -24,11 +24,23 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Generate a random gender, then generate the name based of that
+        // Generate random date of birth (max 70 years, min 15 years), then decide if private
+        $gender = fake()->randomElement(['male', 'female', 'x']);
+        $date_of_birth = fake()->dateTimeBetween('-70 years', '-15 years');
+        $isAdult = date('Y') - $date_of_birth->format('Y') > 18;
+        $isPrivate = true;
+        if ($isAdult) {
+            $isPrivate = fake()->randomElement([true, false]);
+        }
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'name' => fake()->firstName($gender),
+            'display_name' => fake()->userName(),
+            'gender' => $gender,
+            'date_of_birth' => $date_of_birth,
+            'visibility' => $isPrivate,
+            'password' => static::$password ??= Hash::make('GGG'),
             'remember_token' => Str::random(10),
         ];
     }
