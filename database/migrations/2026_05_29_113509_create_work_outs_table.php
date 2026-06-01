@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->integer('length');
-            $table->integer('speed');
+            $table->double('speed');
             $table->string('type');
             $table->integer('points');
             $table->timestamps();
