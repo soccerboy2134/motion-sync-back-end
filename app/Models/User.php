@@ -29,4 +29,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+        public function workouts()
+        {
+            return $this->hasMany(WorkOut::class);
+        }
+
+        public function leaderboardEntries()
+        {
+            return $this->hasMany(Leaderboard::class);
+        }
 }
