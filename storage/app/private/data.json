@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Pulse Bright",
+        "main": "Colors.white",
+        "accent": "Colors.orange",
+        "background": "Colors.white",
+        "button": "Colors.orange",
+        "text":"Colors.black"
+    },
+    {
+        "name": "Forest Run",
+        "main": "Colors.black",
+        "accent": "Colors.green",
+        "background": "Colors.black",
+        "button": "Colors.green",
+        "text":"Colors.white"
+    },
+    {
+        "name": "Neon Trail",
+        "main": "Colors.green",
+        "accent": "Colors.white",
+        "background": "Colors.white",
+        "button": "Colors.orange",
+        "text":"Colors.black"
+    }
+]
