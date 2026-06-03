@@ -11,7 +11,7 @@ class WorkOutController extends Controller
      */
     public function index() 
     {
-        
+
     }
 
     /**
@@ -25,13 +25,13 @@ class WorkOutController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreWorkOutRequest $request)
     {
         $request = $request->validated();
 
-        $user = User::create($request);
+        $WorkOut = WorkOut::create($request);
 
-        return $user;
+        return $WorkOut;
     }
 
     /**
@@ -53,27 +53,16 @@ class WorkOutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-     public function update(UpdateUserRequest $request, string $id)
-    {
-        $request = $request->validated();
-        
-        $user = User::find($id);
-        $user->update($request);
-
-        return $user;
-    }
+     
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        if (Auth::user()->id != $id) {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
+    {   
 
-        $user = User::find($id);
-        $user->delete();
+        $WorkOut = WorkOut::find($id);
+        $WorkOut->delete();
 
         return "success :c";
     }
