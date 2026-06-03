@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class StoreUserRequest extends FormRequest
 {
@@ -13,7 +12,8 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return !Auth::check();
+        // It's fine to let the user re-log if they are already logged in; we remove the old bearer token anyway
+        return true;
     }
 
     /**

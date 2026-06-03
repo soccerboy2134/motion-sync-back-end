@@ -13,7 +13,8 @@ class AuthenticateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return !Auth::check();
+        // It's fine to let the user re-log if they are already logged in; we remove the old bearer token anyway
+        return true;
     }
 
     /**
