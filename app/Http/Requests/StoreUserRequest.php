@@ -22,10 +22,10 @@ class StoreUserRequest extends FormRequest
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    { 
         return [
             'name' => 'required',
-            'display_name' => 'required|unique',
+            'display_name' => 'required|unique:users',
             'gender' => 'required',
             'date_of_birth' => 'required|date',
             'visibility' => 'required|boolean',

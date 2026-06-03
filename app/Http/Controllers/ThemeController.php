@@ -14,7 +14,8 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        throw new NotImplementedException();
+        $themes = Theme::all();
+        return $themes;
     }
 
     /**
