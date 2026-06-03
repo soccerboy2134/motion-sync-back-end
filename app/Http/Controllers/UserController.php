@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthenticateUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
@@ -11,11 +12,14 @@ use Nette\NotImplementedException;
 
 class UserController extends Controller
 {
+    // Responses should be standardised, but theres a bit more before that (mainly modifying the login route?)
+    // should also make some basic middleware that only allows modifications if the user is actually the user.
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
+    { 
+        // Currently won't be used? I don't think we'll have a user list. Maybe in an admin panel or smtn
         throw new NotImplementedException();
     }
 
@@ -39,12 +43,43 @@ class UserController extends Controller
         return $user;
     }
 
+    public function authenticate(AuthenticateUserRequest $request)
+    {
+        $request = $request->validated();
+
+        // should return this as errorbag?
+        if (!Auth::attempt($request)) {
+            return response()->json([
+                'message' => 'invalid credentials',
+            ], 401);
+        }
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $user->tokens()->delete();
+
+        $token = $user->createToken('pat')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        throw new NotImplementedException();
+        $user = User::find($id);
+        if ($user->visibility == true) {
+            return $user;
+        }
+        else {
+            return response()->json('Private Profile');
+        }
     }
 
     /**
@@ -80,6 +115,6 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return "success :c";
+        return response()->json('success');
     }
 }
