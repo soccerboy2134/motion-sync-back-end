@@ -2,26 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreWorkOutRequest;
+use App\Models\WorkOut;
+use Illuminate\Support\Facades\Auth;
 
 class WorkOutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index() 
-    {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -29,41 +15,28 @@ class WorkOutController extends Controller
     {
         $request = $request->validated();
 
-        $WorkOut = WorkOut::create($request);
+        $workOut = WorkOut::create($request);
 
-        return $WorkOut;
+        return $workOut;
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-     
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {   
+        $workOut = WorkOut::find($id);
+        
+        if (Auth::user()->id != $workOut->user_id) {
+            return response()->json([
+                'message' => 'You are not authorized to delete this workout.',
+            ], 403);
+        }
 
-        $WorkOut = WorkOut::find($id);
-        $WorkOut->delete();
+        $workOut->delete();
 
-        return "success :c";
+        return response()->json([
+            'message' => 'Your workout was successfully deleted.'
+        ], 200);
     }
 }

@@ -6,30 +6,11 @@ use App\Http\Requests\AuthenticateUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Nette\NotImplementedException;
 
 class UserController extends Controller
 {
     // Responses should be standardised, but theres a bit more before that (mainly modifying the login route?)
-    // should also make some basic middleware that only allows modifications if the user is actually the user.
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    { 
-        // Currently won't be used? I don't think we'll have a user list. Maybe in an admin panel or smtn
-        throw new NotImplementedException();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        throw new NotImplementedException();
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -50,7 +31,7 @@ class UserController extends Controller
         // should return this as errorbag?
         if (!Auth::attempt($request)) {
             return response()->json([
-                'message' => 'invalid credentials',
+                'message' => "Your name/password combination is not valid.",
             ], 401);
         }
 
@@ -78,16 +59,10 @@ class UserController extends Controller
             return $user;
         }
         else {
-            return response()->json('Private Profile');
+            return response()->json([
+                'message' => "This user's profile is private."
+            ], 403);
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        throw new NotImplementedException();
     }
 
     /**
@@ -109,12 +84,16 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         if (Auth::user()->id != $id) {
-            return response()->json(['error' => 'Unauthorized'], 403);
+            return response()->json([
+                'message' => 'You are not authorized to delete this account.',
+            ], 403);
         }
 
         $user = User::find($id);
         $user->delete();
 
-        return response()->json('success');
+        return response()->json([
+            'message' => 'Your account was successfully deleted.'
+        ], 200);
     }
 }

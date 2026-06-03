@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreThemeRequest;
 use App\Models\Theme;
-use Illuminate\Http\Request;
-use Nette\NotImplementedException;
 
 class ThemeController extends Controller
 {
@@ -16,14 +14,6 @@ class ThemeController extends Controller
     {
         $themes = Theme::all();
         return $themes;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        throw new NotImplementedException();
     }
 
     /**
@@ -39,14 +29,6 @@ class ThemeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        throw new NotImplementedException();
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
@@ -54,7 +36,9 @@ class ThemeController extends Controller
         $theme = Theme::find($id);
         $theme->delete();
 
-        return "success";
+        return response()->json([
+            'message' => 'The theme was successfully deleted.'
+        ], 200);
     }
 }
 
