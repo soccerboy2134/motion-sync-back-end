@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkOutRequest;
+use App\Models\Leaderboard;
 use App\Models\WorkOut;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,6 +22,22 @@ class WorkOutController extends Controller
     }
 
     /**
+     * Display the specified resource if the user owns the resource.
+     */
+    public function show(string $id) {
+        $workOut = WorkOut::find($id);
+        $user = Auth::user();
+
+        if ($workOut != null && $workOut->user_id == $user->id || $user->role == 'admin') {
+            return $workOut;
+        }
+        
+        return response()->json([
+            'message' => 'You are not authorized to view this workout.',
+        ], 403);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
@@ -36,7 +53,7 @@ class WorkOutController extends Controller
         $workOut->delete();
 
         return response()->json([
-            'message' => 'Your workout was successfully deleted.'
+            'message' =>'Your workout was successfully deleted.'
         ], 200);
     }
 }
