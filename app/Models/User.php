@@ -31,13 +31,17 @@ class User extends Authenticatable
         ];
     }
 
-        public function workouts()
-        {
-            return $this->hasMany(WorkOut::class);
-        }
+    public function workouts()
+    {
+        return $this->hasMany(WorkOut::class);
+    }
 
-        public function leaderboardEntries()
-        {
-            return $this->hasMany(Leaderboard::class);
-        }
+    public function leaderboardEntries()
+    {
+        return $this->hasMany(Leaderboard::class);
+    }
+
+    public function friends() {
+        return $this->hasMany(Friend::class);
+    }
 }

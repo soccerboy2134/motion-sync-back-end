@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             WorkOutSeeder::class,
             LeaderboardSeeder::class,
+            FriendsSeeder::class,
         ]);
     }
 }
