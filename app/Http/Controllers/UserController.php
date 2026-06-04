@@ -55,7 +55,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::find($id);
-        if ($user->visibility == true) {
+        if ($user->visibility == true || $user->id == Auth::user()->id) {
             return $user;
         }
         else {
