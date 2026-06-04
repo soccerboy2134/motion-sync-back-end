@@ -14,7 +14,7 @@ class LeaderboardSeeder extends Seeder
     public function run(): void
     {
         $latest = Leaderboard::latest();
-        $increment = $latest->first()?->position;
+        $increment = $latest->first()?->increment;
         $increment++;
 
         // Get the 10 users with the most points
