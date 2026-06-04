@@ -23,12 +23,37 @@ class StoreWorkOutRequest extends FormRequest
      */
      public function rules(): array
     {
+        // return [
+        //     'user_id' => 'required|exists:users',
+        //     'length' => 'required',
+        //     'speed' => 'required',
+        //     'type' => 'required',
+        //     'points' => 'required',
+        // ];
         return [
-            'user_id' => 'required|exists:users',
-            'length' => 'required',
-            'speed' => 'required',
-            'type' => 'required',
-            'points' => 'required',
+            'waypoints' => 'required|array',
+            
+            // Im honestly not sure if this fully works, but I pretend it does and Laravel agrees with me so..
+            'waypoints.*' => [
+                'required',
+                'array:lat,lon,timestamp',
+            ],
+
+            'waypoints.*.lat' => [
+                'required',
+                'numeric',
+                'between:-90,90',
+            ],
+
+            'waypoints.*.lon' => [
+                'required',
+                'numeric',
+                'between:-180,180',
+            ],
+
+            'waypoints.*.timestamp' => [
+                'required',
+            ],
         ];
     }
 
@@ -36,11 +61,15 @@ class StoreWorkOutRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => 'Name is required',
-            'length.required' => 'length is required',
-            'speed.required' => 'speed is required',
-            'type.required' => 'type is required',
-            'points.required' => 'points is required',
+            'waypoints.required' => 'Waypoints array not supplied',
+            'waypoints.array' => 'Waypoints is not an array',
         ];
+        // return [
+        //     'user_id.required' => 'Name is required',
+        //     'length.required' => 'length is required',
+        //     'speed.required' => 'speed is required',
+        //     'type.required' => 'type is required',
+        //     'points.required' => 'points is required',
+        // ];
     }
 }

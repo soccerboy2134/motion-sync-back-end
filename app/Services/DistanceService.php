@@ -65,9 +65,27 @@ class DistanceService
         }
 
         $finalResult = new DistanceResult();
-        $finalResult->m = DistanceService::calculateTotalDistance($results);
-        $finalResult->km = $finalResult->m / 1000;
-        $finalResult->time = DistanceService::calculateTotalTime($results);
+        $finalResult->m = round(DistanceService::calculateTotalDistance($results));
+        $finalResult->km = round($finalResult->m / 1000, 1);
+        $finalResult->time = round(DistanceService::calculateTotalTime($results));
+        $finalResult->speed = round(($finalResult->km / $finalResult->time) * 3600, 1);
+        $finalResult->type = $finalResult->speed < 4.5 ? 'walking' : ($finalResult->speed < 10.0 ? 'running' : 'sprinting');
+        
+        $points = $finalResult->m * $finalResult->speed;
+        switch ($finalResult->type) {
+            case 'walking':
+                break;
+            case 'running':
+                $points = $points * 2;
+                break;
+            case 'sprinting': 
+                $points = $points * 3;
+                break;
+        }
+
+        $points = $points / 100;
+        $points = round($points);
+        $finalResult->points = $points; 
 
         array_push($results, $finalResult);
 

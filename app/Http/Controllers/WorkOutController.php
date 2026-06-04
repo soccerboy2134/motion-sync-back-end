@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWorkOutRequest;
 use App\Models\Leaderboard;
 use App\Models\WorkOut;
+use App\Services\DistanceService;
 use Illuminate\Support\Facades\Auth;
 
 class WorkOutController extends Controller
@@ -16,7 +17,16 @@ class WorkOutController extends Controller
     {
         $request = $request->validated();
 
-        $workOut = WorkOut::create($request);
+        $result = DistanceService::calculateDistance($request['waypoints']);
+        $finalResult = $result[count($result) - 1];
+
+        $workOut = new WorkOut();
+        $workOut->user_id = Auth::user()->id;
+        $workOut->length = $finalResult->m;
+        $workOut->speed = $finalResult->speed;
+        $workOut->type = $finalResult->type;
+        $workOut->points = $finalResult->points;
+        $workOut->save();
 
         return $workOut;
     }
