@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FriendController;
+use App\Http\Controllers\LeaderBoardController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOutController;
@@ -14,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 // Unprotected (auth)
 Route::middleware('throttle:10,1')->group(function() {
-    Route::post('/user/store', [UserController::class, 'store'])->middleware('throttle:10,1')->name('user.store');
-    Route::post('/user/authenticate', [UserController::class, 'authenticate'])->middleware('throtle:10,1')->name('user.authenticate');
+    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+    Route::post('/user/authenticate', [UserController::class, 'authenticate'])->name('user.authenticate');
 
     // sanctum hates us if we don't have a login method. It overrides it, and gives its own response. 
     // it still hates us if we don't have it.. so here it is sanctum (we could override their override, but i dont want to)
@@ -37,12 +39,26 @@ Route::middleware(['auth:sanctum', 'throttle:100,1'])->group(function() {
     Route::get('/theme/', [ThemeController::class, 'index'])->name('theme.index');
 
     // WorkOut
+    Route::get('/workout/{id}', [WorkOutController::class, 'show'])->name('workout.show');
     Route::post('/workout/store', [WorkOutController::class, 'store'])->name('workout.store');
     Route::delete('/workout/{id}', [WorkOutController::class, 'destroy'])->name('workout.destroy');
 
+    // Friends 
+    Route::get('/friend', [FriendController::class, 'index'])->name('friend.index');
+    Route::post('/friend/{id}', [FriendController::class, 'store'])->name('friend.store');
+    Route::put('/friend', [FriendController::class, 'update'])->name('friend.update');
+
+    // Leaderboard
+    Route::get('/leaderboard', [LeaderBoardController::class, 'showGlobal'])->name('leaderboard.global');
+    Route::get('/leaderboard/friends', [LeaderBoardController::class, 'showFriends'])->name('leaderboard.friends');
+
+    // Admin routes 
     Route::group(['middleware' => 'IsAdmin'], function() {
         Route::post('/theme/store', [ThemeController::class, 'store'])->name('theme.store');
         Route::delete('/theme/{id}', [ThemeController::class, 'destroy'])->name('theme.destroy');
+        
+        Route::post('/leaderboard', [LeaderBoardController::class, 'store'])->name('leaderboard.store');
+        Route::delete('/leaderboard/{id}', [LeaderBoardController::class, 'destroy'])->name('leaderboard.destroy');
     });
 });
 
