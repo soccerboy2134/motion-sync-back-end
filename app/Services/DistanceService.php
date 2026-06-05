@@ -19,6 +19,7 @@ class DistanceService
             throw new Exception("Array too small");
         }
 
+        $coords = DistanceService::removeDuplicates($coords);
         $results = [];
 
         $R = 6371000; // Earth's radius in meters.. look idk wikipedia said it?
@@ -96,6 +97,20 @@ class DistanceService
         Log::info("===");
         Log::info(json_encode($coords, JSON_PRETTY_PRINT));
         return $results;
+    }
+
+    public static function removeDuplicates(array $coords) {
+        // Foreach would work, but for is easier as we need keys. 
+        // Removing the keys would work, but sucks because of array shifting. Temp solution for that is just to make a new array.
+        $fixedCoords = [];
+
+        for ($i = 0; $i < count($coords); $i++) {
+            if ($i == 0) continue;
+            
+            if ($coords[$i]['timestamp'] != $coords[$i - 1]['timestamp']) array_push($fixedCoords, $coords[$i]); 
+        }
+
+        return $fixedCoords;
     }
 
     public static function calculateTotalDistance(array $results) {
