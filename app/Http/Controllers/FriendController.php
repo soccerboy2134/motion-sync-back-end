@@ -101,7 +101,7 @@ class FriendController extends Controller
 
         $relationships = Friend::hasRecords($foreignUserId);
 
-        if ($relationships->count() !== 1) {
+        if ($relationships->count() !== 1 && $action !== 'block') {
             return response()->json([
                 'message' => "You don't have any pending requests with this user.", //There is technically a case where (if bugged) there are 2 friend requests. In that case, the user created this problem and they can deal with the consequences <3
             ], 404);
@@ -164,7 +164,8 @@ class FriendController extends Controller
             case 'block':
 
                 // Remove whatever relationship exists
-                $relationship->delete();
+                
+                if ($relationship) $relationship->delete();
 
                 $blocked = Friend::create([
                     'sender'   => $currentUserId,
