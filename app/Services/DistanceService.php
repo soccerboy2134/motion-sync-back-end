@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\DTO\DistanceResult;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class DistanceService
 {
@@ -89,6 +90,10 @@ class DistanceService
 
         array_push($results, $finalResult);
 
+        Log::info("-----");
+        Log::info(now());
+        Log::info($results);
+        Log::info("-----");
         return $results;
     }
 
