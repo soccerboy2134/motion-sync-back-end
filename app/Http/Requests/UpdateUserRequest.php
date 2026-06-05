@@ -16,7 +16,7 @@ class UpdateUserRequest extends FormRequest
         $user = Auth::user();
         $id = $this->route('id');
 
-        return $user->id === $id;
+        return $user->id == $id;
     }
 
     /**
