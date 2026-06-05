@@ -92,8 +92,7 @@ class DistanceService
 
         Log::info("-----");
         Log::info(now());
-        Log::info($results);
-        Log::info("-----");
+        Log::info(json_encode($results, JSON_PRETTY_PRINT));
         return $results;
     }
 
