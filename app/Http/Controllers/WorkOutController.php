@@ -10,6 +10,7 @@ use App\Achievements\TrackWorkOutLength;
 use App\Achievements\TrackWorkOuts;
 use App\Http\Requests\StoreWorkOutRequest;
 use App\Models\Leaderboard;
+use App\Models\User;
 use App\Models\WorkOut;
 use App\Services\DistanceService;
 use Illuminate\Support\Facades\Auth;
@@ -36,13 +37,13 @@ class WorkOutController extends Controller
         $workOut->save();
 
         // Achievements
-        $user = Auth::find($user_id);
-        $user->addProgress(new TrackWorkOuts(), 1);
-        $user->setProgress(new TrackWorkOutLength(), $workOut->length);
-        $user->addProgress(new TrackFullWorkOutLength(), $workOut->length);
-        if ($workOut->type == 'walking') $user->addProgress(new TrackWalks(), 1);
-        if ($workOut->type == 'running') $user->addProgress(new TrackRuns(), 1);
-        if ($workOut->type == 'sprinting') $user->addProgress(new TrackSprints(), 1);
+        // $user = User::find($user_id);
+        // $user->addProgress(new TrackWorkOuts(), 1);
+        // $user->setProgress(new TrackWorkOutLength(), $workOut->length);
+        // $user->addProgress(new TrackFullWorkOutLength(), $workOut->length);
+        // if ($workOut->type == 'walking') $user->addProgress(new TrackWalks(), 1);
+        // if ($workOut->type == 'running') $user->addProgress(new TrackRuns(), 1);
+        // if ($workOut->type == 'sprinting') $user->addProgress(new TrackSprints(), 1);
 
         return $workOut;
     }

@@ -57,7 +57,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if ($user->visibility == true || $user->id == Auth::user()->id) {
-            return $user;
+            return $user->achievements;
         }
         else {
             return response()->json([
