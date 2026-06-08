@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Achievements\TrackFullWorkOutLength;
+use App\Achievements\TrackRuns;
+use App\Achievements\TrackSprints;
+use App\Achievements\TrackWalks;
+use App\Achievements\TrackWorkOutLength;
+use App\Achievements\TrackWorkOuts;
 use App\Http\Requests\StoreWorkOutRequest;
 use App\Models\Leaderboard;
 use App\Models\WorkOut;
@@ -16,17 +22,27 @@ class WorkOutController extends Controller
     public function store(StoreWorkOutRequest $request)
     {
         $request = $request->validated();
+        $user_id = Auth::user()->id;
 
         $result = DistanceService::calculateDistance($request['waypoints']);
         $finalResult = $result[count($result) - 1];
 
         $workOut = new WorkOut();
-        $workOut->user_id = Auth::user()->id;
+        $workOut->user_id = $user_id;
         $workOut->length = $finalResult->m;
         $workOut->speed = $finalResult->speed;
         $workOut->type = $finalResult->type;
         $workOut->points = $finalResult->points;
         $workOut->save();
+
+        // Achievements
+        $user = Auth::find($user_id);
+        $user->addProgress(new TrackWorkOuts(), 1);
+        $user->setProgress(new TrackWorkOutLength(), $workOut->length);
+        $user->addProgress(new TrackFullWorkOutLength(), $workOut->length);
+        if ($workOut->type == 'walking') $user->addProgress(new TrackWalks(), 1);
+        if ($workOut->type == 'running') $user->addProgress(new TrackRuns(), 1);
+        if ($workOut->type == 'sprinting') $user->addProgress(new TrackSprints(), 1);
 
         return $workOut;
     }

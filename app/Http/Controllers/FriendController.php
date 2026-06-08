@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Achievements\TrackFriends;
 use App\Http\Requests\UpdateFriendRequest;
 use App\Models\Friend;
 use App\Models\User;
@@ -126,6 +127,10 @@ class FriendController extends Controller
                 $relationship->status = 'friend';
                 $relationship->save();
 
+                // Achievement
+                $user = User::find($currentUserId);
+                $user->addProgress(new TrackFriends(), 1);
+
                 return response()->json([
                     'message' => 'Friend request accepted.',
                     'record' => $relationship,
@@ -164,7 +169,6 @@ class FriendController extends Controller
             case 'block':
 
                 // Remove whatever relationship exists
-                
                 if ($relationship) $relationship->delete();
 
                 $blocked = Friend::create([
@@ -172,6 +176,10 @@ class FriendController extends Controller
                     'receiver' => $foreignUserId,
                     'status'   => 'blocked',
                 ]);
+
+                // Achievement
+                $user = User::find($currentUserId);
+                $user->unlock(new \App\Achievements\user\BlockUser);
 
                 return response()->json([
                     'message' => 'User blocked.',

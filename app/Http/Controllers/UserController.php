@@ -20,6 +20,7 @@ class UserController extends Controller
         $request = $request->validated();
 
         $user = User::create($request);
+        $user->unlock(new \App\Achievements\user\JoinMotionSync);
 
         return $user;
     }
