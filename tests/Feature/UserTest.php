@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\achievements\Achievement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
@@ -23,6 +24,13 @@ test ('Migrations', function () {
 
 test('User can register', function () {
     Artisan::call('migrate:fresh');
+    // Seed the join-motionsync achievement used in UserController::store
+    $achievement = Achievement::create([
+        'name' => 'Welcome to MotionSync',
+        'description' => 'Join MotionSync and start your fitness journey.',
+        'slug' => 'join-motionsync',
+        'points' => 1,
+    ]);
 
     $payload = User::factory()->make()->toArray();
     $payload['password'] = 'password123';
@@ -33,6 +41,13 @@ test('User can register', function () {
 
     $response->assertStatus(201)->assertJsonFragment(['display_name' => $payload['display_name']]);
     $this->assertDatabaseHas('users', ['display_name' => $payload['display_name']]);
+    // Achievement for joining should be awarded
+    $registered = User::where('display_name', $payload['display_name'])->first();
+    $this->assertDatabaseHas('achievement_progress', [
+        'user_id' => $registered->id,
+        'achievement_id' => $achievement->id,
+        'is_unlocked' => true,
+    ]);
 });
 
 test('User cannot register with invalid data', function () {

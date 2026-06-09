@@ -5,12 +5,12 @@ namespace Tests\Feature;
 use App\Models\Friend;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Schema;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
+use App\Models\achievements\Achievement;
+use App\Models\achievements\AchievementChainParent;
+use App\Models\achievements\AchievementChainChild;
 
 uses(TestCase::class, RefreshDatabase::class)->in('Feature');
 
@@ -60,6 +60,15 @@ test('Store creates request and blocks duplicates', function () {
 test('Update accepts unfriend block and unblock', function () {
     Artisan::call('migrate:fresh');
 
+    // Seed minimal achievements required by the controller
+    $friendsChain = AchievementChainParent::create(['name' => 'friends']);
+    $ach1 = Achievement::create(['name' => 'First Friend', 'description' => 'Add your first friend', 'slug' => 'friends-1', 'points' => 1]);
+    $ach10 = Achievement::create(['name' => 'Social Circle', 'description' => 'Add 10 friends', 'slug' => 'friends-10', 'points' => 10]);
+    $ach100 = Achievement::create(['name' => 'Community Builder', 'description' => 'Add 100 friends', 'slug' => 'friends-100', 'points' => 100]);
+    AchievementChainChild::create(['achievement_chain_parent_id' => $friendsChain->id, 'achievement_id' => $ach1->id]);
+    AchievementChainChild::create(['achievement_chain_parent_id' => $friendsChain->id, 'achievement_id' => $ach10->id]);
+    AchievementChainChild::create(['achievement_chain_parent_id' => $friendsChain->id, 'achievement_id' => $ach100->id]);
+    $blockAch = Achievement::create(['name' => 'Block Party', 'description' => 'Block a user', 'slug' => 'block-user', 'points' => 1]);
     $alice = User::factory()->create();
     $bob = User::factory()->create();
     // Bob sends request to Alice
@@ -81,6 +90,13 @@ test('Update accepts unfriend block and unblock', function () {
         'sender' => $bob->id,
         'receiver' => $alice->id,
         'status' => 'friend',
+    ]);
+
+    // Achievement for first friend should be unlocked
+    $this->assertDatabaseHas('achievement_progress', [
+        'user_id' => $alice->id,
+        'achievement_id' => $ach1->id,
+        'is_unlocked' => true,
     ]);
     // Alice unfriends Bob
     $unfriend = $this->putJson('/api/friend', [
@@ -106,6 +122,12 @@ test('Update accepts unfriend block and unblock', function () {
         'sender' => $alice->id,
         'receiver' => $bob->id,
         'status' => 'blocked',
+    ]);
+    // Blocking should award the block-user achievement
+    $this->assertDatabaseHas('achievement_progress', [
+        'user_id' => $alice->id,
+        'achievement_id' => $blockAch->id,
+        'is_unlocked' => true,
     ]);
     // Alice unblocks Bob
     $unblock = $this->putJson('/api/friend', [
