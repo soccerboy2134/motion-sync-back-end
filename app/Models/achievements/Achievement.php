@@ -3,6 +3,7 @@
 namespace App\Models\achievements;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,4 +30,15 @@ class Achievement extends Model
     public function users() {
         return $this->belongsToMany(User::class, 'achievement_progress', 'achievement_id', 'user_id')->withPivot('is_unlocked');
     }
+
+    public function userProgress()
+    {
+        return $this->hasOne(AchievementProgress::class)
+            ->where('user_id', Auth::id());
+    }
+
+    public static function getAchievementsWithProgress()
+{
+    return self::with('userProgress')->get();
+}
 }
