@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Achievements\leaderboard\EnteredTop;
-use App\Achievements\leaderboard\EnteredTopOne;
+use App\Models\achievements\AchievementProgress;
 use App\Models\Friend;
 use App\Models\Leaderboard;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LeaderBoardController extends Controller
 {
@@ -28,19 +27,23 @@ class LeaderBoardController extends Controller
 
         // Achievements 
         $topUser = $topUsers[0];
-        $topUser->unlock(new EnteredTopOne());
+        AchievementProgress::progress('leaderboard-global-1', 1, $topUser->id);
 
         // Create leaderboard entries for these users
         foreach ($topUsers as $user) {
+            if ($user->workouts_sum_points == null) {
+                $user->workouts_sum_points = 0;
+            }
+
             \App\Models\Leaderboard::create([
                 'user_id' => $user->id,
                 'position' => $user->workouts_sum_points, 
                 'increment' => $increment
             ]);
 
-            $user->unlock(new EnteredTop());
+            AchievementProgress::progress('leaderboard-entered', 1, $user->id);
         }
-        
+        Log::info(AchievementProgress::all());
         $leaderboard = Leaderboard::where('increment',$increment)->get();
         return $leaderboard;
     }

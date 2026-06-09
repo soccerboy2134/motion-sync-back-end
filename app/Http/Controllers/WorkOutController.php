@@ -2,15 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Achievements\TrackFullWorkOutLength;
-use App\Achievements\TrackRuns;
-use App\Achievements\TrackSprints;
-use App\Achievements\TrackWalks;
-use App\Achievements\TrackWorkOutLength;
-use App\Achievements\TrackWorkOuts;
 use App\Http\Requests\StoreWorkOutRequest;
-use App\Models\Leaderboard;
-use App\Models\User;
+use App\Models\achievements\AchievementProgress;
 use App\Models\WorkOut;
 use App\Services\DistanceService;
 use Illuminate\Support\Facades\Auth;
@@ -35,15 +28,12 @@ class WorkOutController extends Controller
         $workOut->type = $finalResult->type;
         $workOut->points = $finalResult->points;
         $workOut->save();
-
-        // Achievements
-        // $user = User::find($user_id);
-        // $user->addProgress(new TrackWorkOuts(), 1);
-        // $user->setProgress(new TrackWorkOutLength(), $workOut->length);
-        // $user->addProgress(new TrackFullWorkOutLength(), $workOut->length);
-        // if ($workOut->type == 'walking') $user->addProgress(new TrackWalks(), 1);
-        // if ($workOut->type == 'running') $user->addProgress(new TrackRuns(), 1);
-        // if ($workOut->type == 'sprinting') $user->addProgress(new TrackSprints(), 1);
+        AchievementProgress::progressChain('workouts', 1);
+        AchievementProgress::progressChain('total-distance', $workOut->length);
+        if ($workOut->type == 'walking') AchievementProgress::progressChain('walks', $workOut->length);
+        if ($workOut->type == 'running') AchievementProgress::progressChain('runs', $workOut->length);
+        if ($workOut->type == 'sprinting') AchievementProgress::progressChain('sprints', $workOut->length);
+        
 
         return $workOut;
     }

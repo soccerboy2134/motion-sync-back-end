@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Achievements\TrackFriends;
 use App\Http\Requests\UpdateFriendRequest;
+use App\Models\achievements\AchievementProgress;
 use App\Models\Friend;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class FriendController extends Controller
 {
@@ -128,8 +129,7 @@ class FriendController extends Controller
                 $relationship->save();
 
                 // Achievement
-                $user = User::find($currentUserId);
-                $user->addProgress(new TrackFriends(), 1);
+                AchievementProgress::progressChain('friends', 1);
 
                 return response()->json([
                     'message' => 'Friend request accepted.',
@@ -178,8 +178,7 @@ class FriendController extends Controller
                 ]);
 
                 // Achievement
-                $user = User::find($currentUserId);
-                $user->unlock(new \App\Achievements\user\BlockUser);
+                AchievementProgress::progress('block-user', 1);
 
                 return response()->json([
                     'message' => 'User blocked.',

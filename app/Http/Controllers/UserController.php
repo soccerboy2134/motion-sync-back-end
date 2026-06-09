@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuthenticateUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\achievements\AchievementProgress;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,11 @@ class UserController extends Controller
         $request = $request->validated();
 
         $user = User::create($request);
-        $user->unlock(new \App\Achievements\user\JoinMotionSync);
+
+        // do not show this in the documentation.
+        Auth::login($user);
+        AchievementProgress::progress('join-motionsync', 1);
+        Auth::logout();
 
         return $user;
     }
@@ -57,7 +62,8 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if ($user->visibility == true || $user->id == Auth::user()->id) {
-            return $user->achievements;
+            $user->achievements = AchievementProgress::getAllProgression();
+            return $user;
         }
         else {
             return response()->json([
