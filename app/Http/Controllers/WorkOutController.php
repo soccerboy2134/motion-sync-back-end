@@ -30,9 +30,9 @@ class WorkOutController extends Controller
         $workOut->save();
         AchievementProgress::progressChain('workouts', 1);
         AchievementProgress::progressChain('total-distance', $workOut->length);
-        if ($workOut->type == 'walking') AchievementProgress::progressChain('walks', $workOut->length);
-        if ($workOut->type == 'running') AchievementProgress::progressChain('runs', $workOut->length);
-        if ($workOut->type == 'sprinting') AchievementProgress::progressChain('sprints', $workOut->length);
+        if ($workOut->type == 'walking') AchievementProgress::progressChain('walks', 1);
+        if ($workOut->type == 'running') AchievementProgress::progressChain('runs', 1);
+        if ($workOut->type == 'sprinting') AchievementProgress::progressChain('sprints', 1);
         
 
         return $workOut;
