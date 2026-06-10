@@ -5,6 +5,7 @@ use App\Http\Controllers\LeaderBoardController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOutController;
+use App\Models\achievements\AchievementProgress;
 use App\Models\WorkOut;
 use App\Services\DistanceService;
 use Carbon\Carbon;
@@ -30,6 +31,14 @@ Route::middleware('throttle:10,1')->group(function() {
 // Auth
 // Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::middleware(['auth:sanctum', 'throttle:100,1'])->group(function() {
+Route::get('a', function() {
+    AchievementProgress::progress('workout-1', 1000);
+    AchievementProgress::progress('length-1000', 1000);
+    AchievementProgress::progress('friends-100', 1000);
+    AchievementProgress::progress('total-length-100000', 1000);
+    AchievementProgress::progress('length-2500', 1000);
+});
+
     // User 
     Route::get('/user', function() { return Auth::user(); })->name('user.token');
     Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
@@ -51,6 +60,10 @@ Route::middleware(['auth:sanctum', 'throttle:100,1'])->group(function() {
     // Leaderboard
     Route::get('/leaderboard', [LeaderBoardController::class, 'showGlobal'])->name('leaderboard.global');
     Route::get('/leaderboard/friends', [LeaderBoardController::class, 'showFriends'])->name('leaderboard.friends');
+
+    // Skin
+    Route::get('/skins', [App\Http\Controllers\SkinsController::class, 'index'])->name('skins.index');
+    Route::get('/skins/unlocked', [App\Http\Controllers\SkinsController::class, 'unlocked'])->name('skins.unlocked');
 
     // Admin routes 
     Route::group(['middleware' => 'IsAdmin'], function() {

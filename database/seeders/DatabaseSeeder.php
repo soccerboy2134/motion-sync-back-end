@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             ThemeSeeder::class,
+            BadgeSeeder::class,
+            SkinSeeder::class,
             UserSeeder::class,
             AchievementSeeder::class,
             WorkOutSeeder::class,

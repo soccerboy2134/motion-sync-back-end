@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('achievements', function (Blueprint $table) {
+        Schema::create('unlocked_skins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('badge_id')->default(1);
-            $table->foreignId('skin_id')->default(1);
-            $table->string('name');
-            $table->string('description');
-            $table->string('slug');
-            $table->integer('points')->default(1);
+            $table->foreignId('user_id');
+            $table->foreignId('skin_id');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('achievements');
+        Schema::dropIfExists('unlocked_skins');
     }
 };

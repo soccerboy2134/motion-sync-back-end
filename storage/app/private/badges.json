@@ -1,0 +1,46 @@
+[
+    {
+        "name": "Gold 1",
+        "location": "gold1"
+    },
+    {
+        "name": "Gold 2",
+        "location": "gold2"
+    },
+    {
+        "name": "Gold 3",
+        "location": "gold3"
+    },
+    {
+        "name": "Silver 1",
+        "location": "silver1"
+    },
+    {
+        "name": "Silver 2",
+        "location": "silver2"
+    },
+    {
+        "name": "Silver 3",
+        "location": "silver3"
+    },
+    {
+        "name": "Silver 4",
+        "location": "silver4"
+    },
+    {
+        "name": "Bronze 1",
+        "location": "bronze1"
+    },
+    {
+        "name": "Bronze 2",
+        "location": "bronze2"
+    },
+    {
+        "name": "Bronze 3",
+        "location": "bronze3"
+    },
+    {
+        "name": "Bronze 4",
+        "location": "bronze4"
+    }
+]

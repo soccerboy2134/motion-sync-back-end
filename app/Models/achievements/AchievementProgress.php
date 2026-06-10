@@ -2,6 +2,7 @@
 
 namespace App\Models\achievements;
 
+use App\Models\UnlockedSkin;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,6 +37,14 @@ class AchievementProgress extends Model
         // Check if the achievement is unlocked
         if (!$progress->is_unlocked && $progress->points >= $achievement->points) {
             $progress->is_unlocked = true;
+
+            // Unlock associated skin using UnlockedSkin Model if it hasn't been unlocked already
+            if ($achievement->skin_id && !UnlockedSkin::where('user_id', $userId)->where('skin_id', $achievement->skin_id)->exists()) {
+                 UnlockedSkin::create([
+                    'user_id' => $userId,
+                    'skin_id' => $achievement->skin_id
+                ]);
+            }
         }
 
         $progress->save();

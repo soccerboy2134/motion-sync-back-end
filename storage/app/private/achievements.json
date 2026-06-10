@@ -3,208 +3,268 @@
     "Name": "Welcome to MotionSync",
     "Slug": "join-motionsync",
     "Description": "Join MotionSync and start your fitness journey.",
-    "points": 1
+    "points": 1,
+    "unlocks": 1,
+    "badge": 4
   },
   {
     "Name": "First Workout",
     "Slug": "workout-1",
     "Description": "Complete 1 workout.",
     "chain": "workouts",
-    "points": 1
+    "points": 1,
+    "unlocks": 1,
+    "badge": 9
   },
   {
     "Name": "Workout Enthusiast",
     "Slug": "workout-10",
     "Description": "Complete 10 workouts.",
     "chain": "workouts",
-    "points": 10
+    "points": 10,
+    "unlocks": 1,
+    "badge": 9
   },
   {
     "Name": "Workout Veteran",
     "Slug": "workout-100",
     "Description": "Complete 100 workouts.",
     "chain": "workouts",
-    "points": 100
+    "points": 100,
+    "unlocks": 1,
+    "badge": 5
   },
   {
     "Name": "Workout Legend",
     "Slug": "workout-1000",
     "Description": "Complete 1,000 workouts.",
     "chain": "workouts",
-    "points": 1000
+    "points": 1000,
+    "unlocks": 1,
+    "badge": 10
   },
   {
     "Name": "1K Distance",
     "Slug": "length-1000",
     "Description": "Complete a workout with a length of 1,000.",
     "chain": "single-distance",
-    "points": 1000
+    "points": 1000,
+    "unlocks": 1,
+    "badge": 10
   },
   {
     "Name": "2K Distance",
     "Slug": "length-2000",
     "Description": "Complete a workout with a length of 2,000.",
     "chain": "single-distance",
-    "points": 2000
+    "points": 2000,
+    "unlocks": 1,
+    "badge": 10
   },
   {
     "Name": "2.5K Distance",
     "Slug": "length-2500",
     "Description": "Complete a workout with a length of 2,500.",
     "chain": "single-distance",
-    "points": 2500
+    "points": 2500,
+    "unlocks": 1,
+    "badge": 6
   },
   {
     "Name": "5K Distance",
     "Slug": "length-5000",
     "Description": "Complete a workout with a length of 5,000.",
     "chain": "single-distance",
-    "points": 5000
+    "points": 5000,
+    "unlocks": 1,
+    "badge": 6
   },
   {
     "Name": "10K Distance",
     "Slug": "length-10000",
     "Description": "Complete a workout with a length of 10,000.",
     "chain": "single-distance",
-    "points": 10000
+    "points": 10000,
+    "unlocks": 1,
+    "badge": 2
   },
   {
     "Name": "2.5K Total Distance",
     "Slug": "total-length-2500",
     "Description": "Reach a total distance of 2,500 across all workouts.",
     "chain": "total-distance",
-    "points": 2500
+    "points": 2500,
+    "unlocks": 1,
+    "badge": 11
   },
   {
     "Name": "5K Total Distance",
     "Slug": "total-length-5000",
     "Description": "Reach a total distance of 5,000 across all workouts.",
     "chain": "total-distance",
-    "points": 5000
+    "points": 5000,
+    "unlocks": 1,
+    "badge": 11
   },
   {
     "Name": "7.5K Total Distance",
     "Slug": "total-length-7500",
     "Description": "Reach a total distance of 7,500 across all workouts.",
     "chain": "total-distance",
-    "points": 7500
+    "points": 7500,
+    "unlocks": 1,
+    "badge": 7
   },
   {
     "Name": "10K Total Distance",
     "Slug": "total-length-10000",
     "Description": "Reach a total distance of 10,000 across all workouts.",
     "chain": "total-distance",
-    "points": 10000
+    "points": 10000,
+    "unlocks": 1,
+    "badge": 7
   },
   {
     "Name": "100K Total Distance",
     "Slug": "total-length-100000",
     "Description": "Reach a total distance of 100,000 across all workouts.",
     "chain": "total-distance",
-    "points": 100000
+    "points": 100000,
+    "unlocks": 1,
+    "badge": 3
   },
   {
     "Name": "Walker",
     "Slug": "walks-10",
     "Description": "Complete 10 walks.",
     "chain": "walks",
-    "points": 10
+    "points": 10,
+    "unlocks": 1,
+    "badge": 12
   },
   {
     "Name": "Dedicated Walker",
     "Slug": "walks-100",
     "Description": "Complete 100 walks.",
     "chain": "walks",
-    "points": 100
+    "points": 100,
+    "unlocks": 1,
+    "badge": 8
   },
   {
     "Name": "Walking Master",
     "Slug": "walks-1000",
     "Description": "Complete 1,000 walks.",
     "chain": "walks",
-    "points": 1000
+    "points": 1000,
+    "unlocks": 1,
+    "badge": 4
   },
   {
     "Name": "Runner",
     "Slug": "runs-10",
     "Description": "Complete 10 runs.",
     "chain": "runs",
-    "points": 10
+    "points": 10,
+    "unlocks": 1,
+    "badge": 12
   },
   {
     "Name": "Dedicated Runner",
     "Slug": "runs-100",
     "Description": "Complete 100 runs.",
     "chain": "runs",
-    "points": 100
+    "points": 100,
+    "unlocks": 1,
+    "badge": 8
   },
   {
     "Name": "Running Master",
     "Slug": "runs-1000",
     "Description": "Complete 1,000 runs.",
     "chain": "runs",
-    "points": 1000
+    "points": 1000,
+    "unlocks": 1,
+    "badge": 4
   },
   {
     "Name": "Sprinter",
     "Slug": "sprints-10",
     "Description": "Complete 10 sprints.",
     "chain": "sprints",
-    "points": 10
+    "points": 10,
+    "unlocks": 1,
+    "badge": 12
   },
   {
     "Name": "Dedicated Sprinter",
     "Slug": "sprints-100",
     "Description": "Complete 100 sprints.",
     "chain": "sprints",
-    "points": 100
+    "points": 100,
+    "unlocks": 1,
+    "badge": 8
   },
   {
     "Name": "Sprint Master",
     "Slug": "sprints-1000",
     "Description": "Complete 1,000 sprints.",
     "chain": "sprints",
-    "points": 1000
+    "points": 1000,
+    "unlocks": 1,
+    "badge": 4
   },
   {
     "Name": "Global Champion",
     "Slug": "leaderboard-global-1",
     "Description": "Reach #1 on the global leaderboard.",
     "chain": "leaderboard",
-    "points": 1
+    "points": 1,
+    "unlocks": 1,
+    "badge": 4
   },
   {
     "Name": "On the Board",
     "Slug": "leaderboard-entered",
     "Description": "Enter the leaderboard for the first time.",
     "chain": "leaderboard",
-    "points": 1
+    "points": 1,
+    "unlocks": 1,
+    "badge": 4
   },
   {
     "Name": "Block Party",
     "Slug": "block-user",
     "Description": "Block a user.",
-    "points": 1
+    "points": 1,
+    "unlocks": 1,
+    "badge": 4
   },
   {
     "Name": "First Friend",
     "Slug": "friends-1",
     "Description": "Add your first friend.",
     "chain": "friends",
-    "points": 1
+    "points": 1,
+    "unlocks": 1,
+    "badge": 11
   },
   {
     "Name": "Social Circle",
     "Slug": "friends-10",
     "Description": "Add 10 friends.",
     "chain": "friends",
-    "points": 10
+    "points": 10,
+    "unlocks": 1,
+    "badge": 7
   },
   {
     "Name": "Community Builder",
     "Slug": "friends-100",
     "Description": "Add 100 friends.",
     "chain": "friends",
-    "points": 100
+    "points": 100,
+    "unlocks": 1,
+    "badge": 3
   }
 ]

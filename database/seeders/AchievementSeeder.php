@@ -48,6 +48,8 @@ class AchievementSeeder extends Seeder
             }
 
             $achievement = Achievement::create([
+                'skin_id' => $achievement['unlocks'],
+                'badge_id' => $achievement['badge'],
                 'name' => $achievement['Name'],
                 'description' => $achievement['Description'],
                 'slug' => $achievement['Slug'],

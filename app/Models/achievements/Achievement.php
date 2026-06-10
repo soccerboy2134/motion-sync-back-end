@@ -2,13 +2,14 @@
 
 namespace App\Models\achievements;
 
+use App\Models\Badge;
 use App\Models\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-#[Fillable(['name', 'description', 'slug', 'points'])]
+#[Fillable(['badge_id', 'skin_id', 'name', 'description', 'slug', 'points'])]
 class Achievement extends Model
 {
     use HasFactory;
@@ -38,7 +39,12 @@ class Achievement extends Model
     }
 
     public static function getAchievementsWithProgress()
-{
-    return self::with('userProgress')->get();
-}
+    {
+        // also take Badge.php into this method and return it alognside Achievement.
+        return self::with('userProgress')->get()->map(function ($achievement) {
+            $achievement->badge = Badge::find($achievement->badge_id);
+            return $achievement;
+        });
+        // return self::with('userProgress')->get();
+    }
 }

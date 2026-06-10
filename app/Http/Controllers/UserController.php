@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\achievements\Achievement;
 use App\Models\achievements\AchievementProgress;
+use App\Models\UnlockedSkin;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,6 +49,11 @@ class UserController extends Controller
         $user->tokens()->delete();
 
         $token = $user->createToken('pat')->plainTextToken;
+
+        UnlockedSkin::firstOrCreate([
+            'user_id' => $user->id,
+            'skin_id' => 1, // default skin
+        ]);
 
         return response()->json([
             'access_token' => $token,
