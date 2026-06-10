@@ -4,6 +4,7 @@ use App\Models\WorkOut;
 use App\Models\achievements\Achievement;
 use App\Models\achievements\AchievementChainParent;
 use App\Models\achievements\AchievementChainChild;
+use App\Models\achievements\AchievementProgress;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Laravel\Sanctum\Sanctum;
@@ -15,34 +16,14 @@ test('Store workout and award achievements', function () {
 
     $user = App\Models\User::factory()->create();
 
-    // Create achievements and chain entries used by WorkOutController
-    $achievementWorkouts = Achievement::create([
-        'name' => 'Test Workouts',
-        'description' => 'Test chain for workouts',
-        'slug' => 'test-workouts',
-        'points' => 1,
-    ]);
+    // Seed the achievements and chains for workouts and distance
+    $this->seed(\Database\Seeders\AchievementSeeder::class);
+    $this->seed(\Database\Seeders\BadgeSeeder::class);
+    $this->seed(\Database\Seeders\SkinSeeder::class);
 
-    $chainWorkouts = AchievementChainParent::create(['name' => 'workouts']);
-
-    AchievementChainChild::create([
-        'achievement_chain_parent_id' => $chainWorkouts->id,
-        'achievement_id' => $achievementWorkouts->id,
-    ]);
-
-    $achievementDistance = Achievement::create([
-        'name' => 'Test Distance',
-        'description' => 'Test chain for total-distance',
-        'slug' => 'test-distance',
-        'points' => 1,
-    ]);
-
-    $chainDistance = AchievementChainParent::create(['name' => 'total-distance']);
-
-    AchievementChainChild::create([
-        'achievement_chain_parent_id' => $chainDistance->id,
-        'achievement_id' => $achievementDistance->id,
-    ]);
+    $achievementWorkouts = Achievement::where('slug', 'workout-1')->first();
+    $achievementTenWorkouts = Achievement::where('slug', 'workout-10')->first();
+    $achievementDistance = Achievement::where('slug', 'total-length-2500')->first();
 
     Sanctum::actingAs($user);
 
@@ -91,7 +72,24 @@ test('Store workout and award achievements', function () {
     $this->assertDatabaseHas('achievement_progress', [
         'user_id' => $user->id,
         'achievement_id' => $achievementDistance->id,
-        'is_unlocked' => true,
+        'points' => 1528,
+        'is_unlocked' => false,
+    ]);
+
+    $this->assertDatabaseHas('achievement_progress', [
+        'user_id' => $user->id,
+        'achievement_id' => $achievementTenWorkouts->id,
+        'is_unlocked' => false,
+    ]);
+
+    // Assert the user got their skins
+    $this->assertDatabaseHas('unlocked_skins', [
+        'user_id' => $user->id,
+        'skin_id' => $achievementWorkouts->skin_id,
+    ]);
+    $this->assertDatabaseHas('unlocked_skins', [
+        'user_id' => $user->id,
+        'skin_id' => $achievementDistance->skin_id,
     ]);
 });
 

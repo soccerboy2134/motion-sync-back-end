@@ -24,13 +24,12 @@ test ('Migrations', function () {
 
 test('User can register', function () {
     Artisan::call('migrate:fresh');
-    // Seed the join-motionsync achievement used in UserController::store
-    $achievement = Achievement::create([
-        'name' => 'Welcome to MotionSync',
-        'description' => 'Join MotionSync and start your fitness journey.',
-        'slug' => 'join-motionsync',
-        'points' => 1,
-    ]);
+    // Call the seeder, then lookup the Achievement
+    $this->seed(\Database\Seeders\AchievementSeeder::class);
+    $this->seed(\Database\Seeders\BadgeSeeder::class);
+    $this->seed(\Database\Seeders\SkinSeeder::class);
+
+    $achievement = Achievement::where('slug', 'join-motionsync')->first();
 
     $payload = User::factory()->make()->toArray();
     $payload['password'] = 'password123';
@@ -47,6 +46,12 @@ test('User can register', function () {
         'user_id' => $registered->id,
         'achievement_id' => $achievement->id,
         'is_unlocked' => true,
+    ]);
+
+    // Assert the user got their skin
+    $this->assertDatabaseHas('unlocked_skins', [
+        'user_id' => $registered->id,
+        'skin_id' => $achievement->skin_id,
     ]);
 });
 

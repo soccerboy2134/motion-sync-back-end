@@ -60,15 +60,15 @@ test('Store creates request and blocks duplicates', function () {
 test('Update accepts unfriend block and unblock', function () {
     Artisan::call('migrate:fresh');
 
-    // Seed minimal achievements required by the controller
-    $friendsChain = AchievementChainParent::create(['name' => 'friends']);
-    $ach1 = Achievement::create(['name' => 'First Friend', 'description' => 'Add your first friend', 'slug' => 'friends-1', 'points' => 1]);
-    $ach10 = Achievement::create(['name' => 'Social Circle', 'description' => 'Add 10 friends', 'slug' => 'friends-10', 'points' => 10]);
-    $ach100 = Achievement::create(['name' => 'Community Builder', 'description' => 'Add 100 friends', 'slug' => 'friends-100', 'points' => 100]);
-    AchievementChainChild::create(['achievement_chain_parent_id' => $friendsChain->id, 'achievement_id' => $ach1->id]);
-    AchievementChainChild::create(['achievement_chain_parent_id' => $friendsChain->id, 'achievement_id' => $ach10->id]);
-    AchievementChainChild::create(['achievement_chain_parent_id' => $friendsChain->id, 'achievement_id' => $ach100->id]);
-    $blockAch = Achievement::create(['name' => 'Block Party', 'description' => 'Block a user', 'slug' => 'block-user', 'points' => 1]);
+    // Seed Achievements
+    
+    $this->seed(\Database\Seeders\AchievementSeeder::class);
+    $this->seed(\Database\Seeders\BadgeSeeder::class);
+    $this->seed(\Database\Seeders\SkinSeeder::class);    
+
+    $ach1 = Achievement::where('slug', 'friends-1')->first();
+    $blockAch = Achievement::where('slug', 'block-user')->first();
+    
     $alice = User::factory()->create();
     $bob = User::factory()->create();
     // Bob sends request to Alice
@@ -98,6 +98,13 @@ test('Update accepts unfriend block and unblock', function () {
         'achievement_id' => $ach1->id,
         'is_unlocked' => true,
     ]);
+
+    // Skin Assert
+    $this->assertDatabaseHas('unlocked_skins', [
+        'user_id' => $alice->id,
+        'skin_id' => $ach1->skin_id,
+    ]);
+
     // Alice unfriends Bob
     $unfriend = $this->putJson('/api/friend', [
         'user_id' => $bob->id,
@@ -129,6 +136,13 @@ test('Update accepts unfriend block and unblock', function () {
         'achievement_id' => $blockAch->id,
         'is_unlocked' => true,
     ]);
+
+    // Skin Asert
+    $this->assertDatabaseHas('unlocked_skins', [
+        'user_id' => $alice->id,
+        'skin_id' => $blockAch->skin_id,
+    ]);
+
     // Alice unblocks Bob
     $unblock = $this->putJson('/api/friend', [
         'user_id' => $bob->id,

@@ -33,8 +33,9 @@ test('Store creates leaderboard entries for admin and forbids non-admins', funct
     $user = User::factory()->create(['role' => 'user']);
 
     // Seed achievements used by LeaderBoardController
-    Achievement::create(['name' => 'Global Leader', 'description' => 'Top global leaderboard', 'slug' => 'leaderboard-global-1', 'points' => 1]);
-    Achievement::create(['name' => 'Entered Leaderboard', 'description' => 'Entered the leaderboard', 'slug' => 'leaderboard-entered', 'points' => 1]);
+    $this->seed(\Database\Seeders\AchievementSeeder::class);
+    $this->seed(\Database\Seeders\BadgeSeeder::class);
+    $this->seed(\Database\Seeders\SkinSeeder::class);
 
     // non-admin cannot create leaderboard
     Sanctum::actingAs($user);
@@ -56,12 +57,24 @@ test('Store creates leaderboard entries for admin and forbids non-admins', funct
         'is_unlocked' => true,
     ]);
 
+    // Assert unlocked skin
+    $this->assertDatabaseHas('unlocked_skins', [
+        'user_id' => $user2->id,
+        'skin_id' => $global->skin_id,
+    ]);
+
     // All users entered should have the 'entered' achievement
     foreach ([$user1->id, $user2->id, $user3->id] as $uid) {
         $this->assertDatabaseHas('achievement_progress', [
             'user_id' => $uid,
             'achievement_id' => $entered->id,
             'is_unlocked' => true,
+        ]);
+
+        // Assert skins
+        $this->assertDatabaseHas('unlocked_skins', [
+            'user_id' => $uid,
+            'skin_id' => $entered->skin_id,
         ]);
     }
 });
@@ -76,9 +89,11 @@ test('showGlobal returns latest leaderboard entries', function () {
     WorkOut::factory()->create(['user_id' => $userB->id, 'points' => 150]);
 
     $admin = User::factory()->create(['role' => 'admin']);
+    
     // Seed achievements used by LeaderBoardController
-    Achievement::create(['name' => 'Global Leader', 'description' => 'Top global leaderboard', 'slug' => 'leaderboard-global-1', 'points' => 1]);
-    Achievement::create(['name' => 'Entered Leaderboard', 'description' => 'Entered the leaderboard', 'slug' => 'leaderboard-entered', 'points' => 1]);
+    $this->seed(\Database\Seeders\AchievementSeeder::class);
+    $this->seed(\Database\Seeders\BadgeSeeder::class);
+    $this->seed(\Database\Seeders\SkinSeeder::class);
 
     Sanctum::actingAs($admin);
     $this->postJson('/api/leaderboard')->assertStatus(200)->assertJsonCount(3);
@@ -93,12 +108,24 @@ test('showGlobal returns latest leaderboard entries', function () {
         'is_unlocked' => true,
     ]);
 
+    // Assert skin for global achievement
+    $this->assertDatabaseHas('unlocked_skins', [
+        'user_id' => $userA->id,
+        'skin_id' => $global->skin_id,
+    ]);
+
     // All users returned (userA, userB, admin) should have the 'entered' achievement
     foreach ([$userA->id, $userB->id, $admin->id] as $uid) {
         $this->assertDatabaseHas('achievement_progress', [
             'user_id' => $uid,
             'achievement_id' => $entered->id,
             'is_unlocked' => true,
+        ]);
+
+        // Assert skin
+        $this->assertDatabaseHas('unlocked_skins', [
+            'user_id' => $uid,
+            'skin_id' => $entered->skin_id,
         ]);
     }
 
