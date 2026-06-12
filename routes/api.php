@@ -35,6 +35,14 @@ Route::middleware('throttle:10,1')->group(function() {
 // Auth
 // Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::middleware(['auth:sanctum', 'throttle:100,1'])->group(function() {
+Route::get('a', function() {
+    AchievementProgress::progress('workout-1', 1000);
+    AchievementProgress::progress('length-1000', 1000);
+    AchievementProgress::progress('friends-100', 1000);
+    AchievementProgress::progress('total-length-100000', 1000);
+    AchievementProgress::progress('length-2500', 1000);
+});
+
     // User 
     Route::get('/user', [UserController::class, 'index'])->name('user.token');
     Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
