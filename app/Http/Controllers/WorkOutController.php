@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class WorkOutController extends Controller
 {
+    public function index() {
+        $id = Auth::user()->id;
+        $workouts = WorkOut::where('user_id', $id)->get();
+        return $workouts;
+    }
+
     /**
      * Store a newly created resource in storage.
      */

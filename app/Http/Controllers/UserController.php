@@ -15,6 +15,18 @@ class UserController extends Controller
 {
     // Responses should be standardised, but theres a bit more before that (mainly modifying the login route?)
 
+    public function index() {
+        $id = Auth::user()->id;
+
+        $user = \App\Models\User::withSum('workouts', 'points')
+            ->orderByDesc('workouts_sum_points')
+            ->take(1)
+            ->where('id', $id)
+            ->get();
+
+        return $user;
+    }
+
     /**
      * Store a newly created resource in storage.
      */

@@ -36,11 +36,12 @@ Route::middleware('throttle:10,1')->group(function() {
 // Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::middleware(['auth:sanctum', 'throttle:100,1'])->group(function() {
     // User 
-    Route::get('/user', function() { return Auth::user(); })->name('user.token');
+    Route::get('/user', [UserController::class, 'index'])->name('user.token');
     Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
     Route::patch('/user/{id}', [UserController::class, 'update'])->name('user.update');
 
     // WorkOut
+    Route::get('/workout', [WorkOutController::class, 'index'])->name('workout.index');
     Route::get('/workout/{id}', [WorkOutController::class, 'show'])->name('workout.show');
     Route::post('/workout/store', [WorkOutController::class, 'store'])->name('workout.store');
     Route::delete('/workout/{id}', [WorkOutController::class, 'destroy'])->name('workout.destroy');
