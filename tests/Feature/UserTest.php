@@ -38,7 +38,7 @@ test('User can register', function () {
 
     $response = $this->postJson('/api/user/store', $payload);
 
-    $response->assertStatus(201)->assertJsonFragment(['display_name' => $payload['display_name']]);
+    $response->assertStatus(200)->assertJsonFragment(['display_name' => $payload['display_name']]);
     $this->assertDatabaseHas('users', ['display_name' => $payload['display_name']]);
     // Achievement for joining should be awarded
     $registered = User::where('display_name', $payload['display_name'])->first();

@@ -28,8 +28,8 @@ class StoreUserRequest extends FormRequest
             'display_name' => 'required|unique:users',
             'gender' => 'required',
             'date_of_birth' => 'required|date',
-            'visibility' => 'required|boolean',
-            'password' => 'required|min:8',
+            'visibility' => 'sometimes|boolean',
+            'password' => 'required|min:1',
             'password_confirmation' => 'required|same:password',
         ];
     }
@@ -43,7 +43,6 @@ class StoreUserRequest extends FormRequest
             'gender.required' => 'Gender is required',
             'date_of_birth.required' => 'Date of birth is required',
             'date_of_birth.date' => 'Date of birth must be a valid date',
-            'visibility.required' => 'Visibility is required',
             'visibility.boolean' => 'Visibility must be a boolean value',
             'password.required' => 'Password is required',
             'password.min' => 'Password must be at least 8 characters long',

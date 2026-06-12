@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('display_name')->unique();
             $table->string('gender');
             $table->date('date_of_birth');
-            $table->boolean('visibility');
+            $table->boolean('visibility')->default(True);
             $table->string('role')->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
