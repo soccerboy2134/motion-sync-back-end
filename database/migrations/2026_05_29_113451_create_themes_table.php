@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('themes', function (Blueprint $table) {
             $table->id();
+
             $table->string('name');
-            $table->string('colorMain');
-            $table->string('colorAccent');
-            $table->string('colorBackground');
-            $table->string('colorButton');
-            $table->string('colorText');
+
+            $table->string('bg', 10);
+            $table->string('surface', 10);
+            $table->string('primary', 10);
+            $table->string('onPrimary', 10);
+            $table->string('accent', 10);
+            $table->string('text', 10);
+            $table->string('muted', 10);
+            $table->string('border', 10);
+
             $table->timestamps();
         });
     }

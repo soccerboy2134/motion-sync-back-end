@@ -18,15 +18,18 @@ class ThemeSeeder extends Seeder
             Storage::disk('local')->get('data.json'),
             true
         );
-    
+
         foreach ($themes as $theme) {
             Theme::create([
                 'name' => $theme['name'],
-                'colorMain' => $theme['main'],
-                'colorAccent' => $theme['accent'],
-                'colorBackground' => $theme['background'],
-                'colorButton' => $theme['button'],
-                'colorText' => $theme['text'],
+                'bg' => $theme['bg'],
+                'surface' => $theme['surface'],
+                'primary' => $theme['primary'],
+                'onPrimary' => $theme['onPrimary'],
+                'accent' => $theme['accent'],
+                'text' => $theme['text'],
+                'muted' => $theme['muted'],
+                'border' => $theme['border'],
             ]);
         }
     }

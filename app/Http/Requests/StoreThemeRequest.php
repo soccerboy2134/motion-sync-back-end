@@ -25,12 +25,15 @@ class StoreThemeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required', 
-            'colorMain' => 'required', 
-            'colorAccent' => 'required', 
-            'colorBackground' => 'required', 
-            'colorButton' => 'required', 
-            'colorText' => 'required', 
+            'name' => 'required',
+            'bg' => 'required',
+            'surface' => 'required',
+            'primary' => 'required',
+            'onPrimary' => 'required',
+            'accent' => 'required',
+            'text' => 'required',
+            'muted' => 'required',
+            'border' => 'required',
         ];
     }
 
@@ -38,11 +41,14 @@ class StoreThemeRequest extends FormRequest
     {
         return [
             'name.required' => 'Name is required',
-            'colorMain.required' => 'Main color is required',
-            'colorAccent.required' => 'Accent color is required',
-            'colorBackground.required' => 'Background color is required',
-            'colorButton.required' => 'Button color is required',
-            'colorText.required' => 'Text color is required',
+            'bg.required' => 'Background color is required',
+            'surface.required' => 'Surface color is required',
+            'primary.required' => 'Primary color is required',
+            'onPrimary.required' => 'On primary color is required',
+            'accent.required' => 'Accent color is required',
+            'text.required' => 'Text color is required',
+            'muted.required' => 'Muted color is required',
+            'border.required' => 'Border color is required',
         ];
     }
 }

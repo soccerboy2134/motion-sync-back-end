@@ -1,26 +1,57 @@
 [
-    {
-        "name": "Pulse Bright",
-        "main": "Colors.white",
-        "accent": "Colors.orange",
-        "background": "Colors.white",
-        "button": "Colors.orange",
-        "text":"Colors.black"
-    },
-    {
-        "name": "Forest Run",
-        "main": "Colors.black",
-        "accent": "Colors.green",
-        "background": "Colors.black",
-        "button": "Colors.green",
-        "text":"Colors.white"
-    },
-    {
-        "name": "Neon Trail",
-        "main": "Colors.green",
-        "accent": "Colors.white",
-        "background": "Colors.white",
-        "button": "Colors.orange",
-        "text":"Colors.black"
-    }
+  {
+    "name": "Pulse Bright",
+    "bg": "0xFFFFFFFF",
+    "surface": "0xFFFFFFFF",
+    "primary": "0xFFFFA500",
+    "onPrimary": "0xFFFFFFFF",
+    "accent": "0xFFFFA500",
+    "text": "0xFF000000",
+    "muted": "0xFF808080",
+    "border": "0xFFE0E0E0"
+  },
+  {
+    "name": "Forest Run",
+    "bg": "0xFF0F1E1A",
+    "surface": "0xFF1B2D27",
+    "primary": "0xFF52B788",
+    "onPrimary": "0xFF0F1E1A",
+    "accent": "0xFFF4A261",
+    "text": "0xFFF1FAEE",
+    "muted": "0xFF809B91",
+    "border": "0xFF26392F"
+  },
+  {
+    "name": "Neon Trail",
+    "bg": "0xFF0A0E27",
+    "surface": "0xFF1A1F3A",
+    "primary": "0xFF00F5D4",
+    "onPrimary": "0xFF0A0E27",
+    "accent": "0xFF00F5D4",
+    "text": "0xFFF1F2F6",
+    "muted": "0xFF7C83A4",
+    "border": "0xFF2A2F4A"
+  },
+  {
+    "name": "Voltage",
+    "bg": "0xFFFAFAFA",
+    "surface": "0xFFFFFFFF",
+    "primary": "0xFF5C5BF7",
+    "onPrimary": "0xFFFFFFFF",
+    "accent": "0xFF5C5BF7",
+    "text": "0xFF0D0E1B",
+    "muted": "0xFF71717A",
+    "border": "0xFFEAEAEC"
+  },
+  {
+    "name": "Sunset Pulse",
+    "bg": "0xFF0F0E17",
+    "surface": "0xFF1F1B2E",
+    "primary": "0xFFFF6B6B",
+    "onPrimary": "0xFF0F0E17",
+    "accent": "0xFFFFD93D",
+    "text": "0xFFFFFFFE",
+    "muted": "0xFFA7A9BE",
+    "border": "0xFF322C45"
+  }
 ]
