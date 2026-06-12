@@ -29,7 +29,12 @@ class UserController extends Controller
         AchievementProgress::progress('join-motionsync', 1);
         Auth::logout();
 
-        return $user;
+        $token = $user->createToken('pat')->plainTextToken;
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => "bearer",
+            'user' => $user,
+        ]);
     }
 
     public function authenticate(AuthenticateUserRequest $request)
