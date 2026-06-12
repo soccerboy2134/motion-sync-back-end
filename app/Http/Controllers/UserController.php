@@ -9,6 +9,7 @@ use App\Models\achievements\Achievement;
 use App\Models\achievements\AchievementProgress;
 use App\Models\UnlockedSkin;
 use App\Models\User;
+use App\Models\WorkOut;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -18,11 +19,21 @@ class UserController extends Controller
     public function index() {
         $id = Auth::user()->id;
 
-        $user = \App\Models\User::withSum('workouts', 'points')
-            ->orderByDesc('workouts_sum_points')
-            ->take(1)
-            ->where('id', $id)
-            ->get();
+        // $user = \App\Models\User::withSum('workouts', 'points')
+        //     ->orderByDesc('workouts_sum_points')
+        //     ->take(1)
+        //     ->where('id', $id)
+        //     ->get();
+
+        $points = 0;
+        $workouts = WorkOut::where('user_id', $id)->get();
+        foreach ($workouts as $workout) {
+            $points += $workout['points'];
+        }
+
+        $user = User::find($id);
+        $user->workouts_sum_points = $points;
+        $user->achievements = Achievement::getAchievementsWithProgress();
 
         return $user;
     }
