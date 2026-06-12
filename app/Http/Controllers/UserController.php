@@ -33,7 +33,7 @@ class UserController extends Controller
 
         $user = User::find($id);
         $user->workouts_sum_points = $points;
-        $user->achievements = Achievement::getAchievementsWithProgress();
+        $user->achievements = AchievementProgress::getCompletedAchievements();
 
         return $user;
     }
