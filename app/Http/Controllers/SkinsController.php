@@ -26,6 +26,13 @@ class SkinsController extends Controller
         return response()->json($skins);
     }
 
+    public function show(String $id) {
+        $skin = Skin::find($id);
+
+        // return url
+        return response()->json($skin->location);
+    }
+
     // returns only unlocked skins
     public function unlocked() {
         return UnlockedSkin::where('user_id', Auth::id())->with('skin')->get()->pluck('skin');
