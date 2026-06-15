@@ -30,6 +30,8 @@ Route::middleware('throttle:10,1')->group(function() {
     Route::get('/test', function() {
         return response()->json(['message' => 'You should never see this']);
     })->name('login');
+
+    Route::get('/skins/{id}', [SkinsController::class, 'show'])->name('skin.show');
 });
 
 
@@ -67,7 +69,6 @@ Route::get('a', function() {
     // Skin
     Route::get('/skins', [SkinsController::class, 'index'])->name('skins.index');
     Route::get('/skins/unlocked', [SkinsController::class, 'unlocked'])->name('skins.unlocked');
-    Route::get('/skins/{id}', [SkinsController::class, 'show'])->name('skin.show');
 
     // Admin routes 
     Route::group(['middleware' => 'IsAdmin'], function() {
