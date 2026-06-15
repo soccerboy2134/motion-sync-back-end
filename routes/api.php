@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\LeaderBoardController;
+use App\Http\Controllers\SkinsController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkOutController;
@@ -64,8 +65,9 @@ Route::get('a', function() {
     Route::get('/leaderboard/friends', [LeaderBoardController::class, 'showFriends'])->name('leaderboard.friends');
 
     // Skin
-    Route::get('/skins', [App\Http\Controllers\SkinsController::class, 'index'])->name('skins.index');
-    Route::get('/skins/unlocked', [App\Http\Controllers\SkinsController::class, 'unlocked'])->name('skins.unlocked');
+    Route::get('/skins', [SkinsController::class, 'index'])->name('skins.index');
+    Route::get('/skins/unlocked', [SkinsController::class, 'unlocked'])->name('skins.unlocked');
+    Route::get('/skins/{id}', [SkinsController::class, 'show'])->name('skin.show');
 
     // Admin routes 
     Route::group(['middleware' => 'IsAdmin'], function() {

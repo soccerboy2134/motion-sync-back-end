@@ -6,6 +6,7 @@ use App\Models\Skin;
 use App\Models\UnlockedSkin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SkinsController extends Controller
 {
@@ -26,11 +27,13 @@ class SkinsController extends Controller
         return response()->json($skins);
     }
 
+    // this could be improved.. it should be..
     public function show(String $id) {
         $skin = Skin::find($id);
 
         // return url
-        return response()->json($skin->location);
+        $url = Storage::url($skin->location);
+        return "192.168.129.126:8000" . $url . '.png';
     }
 
     // returns only unlocked skins
