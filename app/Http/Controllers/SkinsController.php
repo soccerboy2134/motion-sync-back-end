@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Skin;
 use App\Models\UnlockedSkin;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class SkinsController extends Controller

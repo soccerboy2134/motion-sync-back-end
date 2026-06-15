@@ -30,6 +30,7 @@ class UpdateUserRequest extends FormRequest
             'gender' => 'sometimes',
             'visibility' => 'sometimes|boolean',
             'password' => 'sometimes|min:8|confirmed',
+            'selected_skin_id' => 'sometimes|exists:skins,id',
         ];
     }
 
