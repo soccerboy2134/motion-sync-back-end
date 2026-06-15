@@ -22,18 +22,20 @@ Route::middleware('throttle:10,1')->group(function() {
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
     Route::post('/user/authenticate', [UserController::class, 'authenticate'])->name('user.authenticate');
 
-    // Theme
-    Route::get('/theme/', [ThemeController::class, 'index'])->name('theme.index');
-
     // sanctum hates us if we don't have a login method. It overrides it, and gives its own response. 
     // it still hates us if we don't have it.. so here it is sanctum (we could override their override, but i dont want to)
     Route::get('/test', function() {
         return response()->json(['message' => 'You should never see this']);
     })->name('login');
 
-    Route::get('/skins/{id}', [SkinsController::class, 'show'])->name('skin.show');
 });
 
+// Unprotected middleware with high rate limits
+Route::middleware('throttle:200,1')->group(function() {
+    Route::get('/skins/{id}', [SkinsController::class, 'show'])->name('skin.show');
+    Route::get('/theme/', [ThemeController::class, 'index'])->name('theme.index');
+
+});
 
 // Auth
 // Route::group(['middleware' => 'auth:sanctum'], function () {
