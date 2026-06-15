@@ -33,7 +33,7 @@ class SkinsController extends Controller
 
         // return url
         $url = Storage::url($skin->location);
-        return "192.168.129.126:8000" . $url . '.png';
+        return redirect('http://192.168.129.126:8000' . $url . '.png');
     }
 
     // returns only unlocked skins
