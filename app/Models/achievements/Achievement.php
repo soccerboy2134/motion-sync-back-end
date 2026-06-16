@@ -32,16 +32,18 @@ class Achievement extends Model
         return $this->belongsToMany(User::class, 'achievement_progress', 'achievement_id', 'user_id')->withPivot('is_unlocked');
     }
 
-    public function userProgress()
+    public function userProgress(String $userId)
     {
         return $this->hasOne(AchievementProgress::class)
-            ->where('user_id', Auth::id());
+            ->where('user_id', $userId);
     }
 
-    public static function getAchievementsWithProgress()
+    public static function getAchievementsWithProgress(String $userId)
     {
-        // also take Badge.php into this method and return it alognside Achievement.
-        return self::with('userProgress')->get()->map(function ($achievement) {
+        // also take Badge.php into this method and return it alognside Achievement. use UserId
+        return self::with(['userProgress' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])->get()->map(function ($achievement) {
             $achievement->badge = Badge::find($achievement->badge_id);
             return $achievement;
         });
