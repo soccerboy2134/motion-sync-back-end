@@ -64,7 +64,7 @@ Route::get('a', function() {
     Route::get('/friend', [FriendController::class, 'index'])->name('friend.index');
     Route::get('/friend/find/{id}', [FriendController::class, 'find'])->name('friend.find');
     Route::post('/friend/{id}', [FriendController::class, 'store'])->name('friend.store');
-    Route::put('/friend', [FriendController::class, 'update'])->name('friend.update');
+    Route::patch('/friend', [FriendController::class, 'update'])->name('friend.update');
 
     // Leaderboard
     Route::get('/leaderboard', [LeaderBoardController::class, 'showGlobal'])->name('leaderboard.global');
