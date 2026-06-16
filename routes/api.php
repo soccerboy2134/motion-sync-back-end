@@ -50,6 +50,7 @@ Route::get('a', function() {
 
     // User 
     Route::get('/user', [UserController::class, 'index'])->name('user.token');
+    Route::get('/user/search/{query}', [UserController::class, 'search'])->name('user.search');
     Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
     Route::patch('/user/{id}', [UserController::class, 'update'])->name('user.update');
 

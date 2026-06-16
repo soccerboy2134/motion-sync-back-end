@@ -107,6 +107,11 @@ class UserController extends Controller
         }
     }
 
+    public function search(string $query) {
+        $users = User::where('display_name', 'like', '%' . $query . '%')->get();
+        return $users;
+    }
+
     /**
      * Update the specified resource in storage.
      */
