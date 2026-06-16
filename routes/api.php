@@ -62,6 +62,7 @@ Route::get('a', function() {
 
     // Friends 
     Route::get('/friend', [FriendController::class, 'index'])->name('friend.index');
+    Route::get('/friend/find/{id}', [FriendController::class, 'find'])->name('friend.find');
     Route::post('/friend/{id}', [FriendController::class, 'store'])->name('friend.store');
     Route::put('/friend', [FriendController::class, 'update'])->name('friend.update');
 

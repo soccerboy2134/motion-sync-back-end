@@ -27,6 +27,18 @@ class FriendController extends Controller
         return $friendships;
     }
 
+    public function find(string $id) {
+        $userId = Auth::id();
+        $possibleFriends = Friend::where(function ($query) use ($id, $userId) {
+            $query->where('sender', $id)
+                ->where('receiver', $userId)
+                ->orWhere('receiver', $id)
+                ->where('sender', $userId);
+        })->get();
+        
+        return $possibleFriends;
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -48,24 +60,6 @@ class FriendController extends Controller
                 'message' => 'what did you think would happen..?.',
             ], 404);
         }
- 
-        // Validate they hold no current records
-        // $possibleFriendships = Friend::query()
-        //     ->where(function ($query) use ($sender, $receiver) {
-        //         $query->where('sender', $sender->id)
-        //               ->where('receiver', $receiver->id);
-        //     })
-        //     ->orWhere(function ($query) use ($sender, $receiver) {
-        //         $query->where('sender', $receiver->id)
-        //               ->where('receiver', $sender->id);
-        //     })
-        // ->get();
-
-        // if (!$possibleFriendships) {
-        //     return response()->json([
-        //         'message' => 'You already have a relationship with this user.',
-        //     ], 400);
-        // }
 
         if (count(Friend::hasRecords($receiver->id)) !== 0) {
             return response()->json([
