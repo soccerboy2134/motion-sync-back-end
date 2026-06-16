@@ -35,7 +35,7 @@ class FriendController extends Controller
                 ->orWhere('receiver', $id)
                 ->where('sender', $userId);
         })->get();
-        
+
         return $possibleFriends;
     }
 
@@ -136,11 +136,11 @@ class FriendController extends Controller
                     break;
                 }
 
-                if ($relationship->receiver !== $currentUserId) {
-                    return response()->json([
-                        'message' => 'You cannot deny your own friend request.',
-                    ], 400);
-                }
+                // if ($relationship->receiver !== $currentUserId) {
+                //     return response()->json([
+                //         'message' => 'You cannot deny your own friend request.',
+                //     ], 400);
+                // }
 
                 $relationship->delete();
 
