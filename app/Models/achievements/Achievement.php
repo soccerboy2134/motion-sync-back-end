@@ -14,39 +14,42 @@ class Achievement extends Model
 {
     use HasFactory;
 
-    public static function achievementExists(string $name) {
+    public static function achievementExists(string $name)
+    {
         return $achievementExists = Achievement::query()
             ->where('name', $name)
             ->first() ?: false;
     }
 
-    public function chains() {
+    public function chains()
+    {
         return $this->belongsToMany(AchievementChainParent::class, 'achievement_chain_children', 'achievement_id', 'achievement_chain_parent_id');
     }
 
-    public function progress() {
+    public function progress()
+    {
         return $this->hasMany(AchievementProgress::class);
     }
 
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany(User::class, 'achievement_progress', 'achievement_id', 'user_id')->withPivot('is_unlocked');
     }
 
-    public function userProgress(String $userId)
+    public function userProgress()
     {
-        return $this->hasOne(AchievementProgress::class)
-            ->where('user_id', $userId);
+        return $this->hasOne(AchievementProgress::class);
     }
 
-    public static function getAchievementsWithProgress(String $userId)
+    public static function getAchievementsWithProgress(string $userId)
     {
-        // also take Badge.php into this method and return it alognside Achievement. use UserId
-        return self::with(['userProgress' => function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        }])->get()->map(function ($achievement) {
+        return self::with([
+            'userProgress' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            }
+        ])->get()->map(function ($achievement) {
             $achievement->badge = Badge::find($achievement->badge_id);
             return $achievement;
         });
-        // return self::with('userProgress')->get();
     }
 }
