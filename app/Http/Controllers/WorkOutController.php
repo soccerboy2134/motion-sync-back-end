@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkOutRequest;
 use App\Models\achievements\AchievementProgress;
+use App\Models\User;
 use App\Models\WorkOut;
 use App\Services\DistanceService;
 use Illuminate\Support\Facades\Auth;
@@ -48,15 +49,15 @@ class WorkOutController extends Controller
      * Display the specified resource if the user owns the resource.
      */
     public function show(string $id) {
-        $workOut = WorkOut::find($id);
-        $user = Auth::user();
+        $user = User::find($id);
 
-        if ($workOut != null && $workOut->user_id == $user->id || $user->role == 'admin') {
-            return $workOut;
+        if ($user->visibility == true || $user->id == Auth::user()->id) {
+            $workOuts = WorkOut::where('user_id', $id)->get();
+            return $workOuts;
         }
-        
+
         return response()->json([
-            'message' => 'You are not authorized to view this workout.',
+            'message' => 'This user has set their workouts to private.',
         ], 403);
     }
 
