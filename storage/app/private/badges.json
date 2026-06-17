@@ -1,46 +1,102 @@
 [
     {
-        "name": "Gold 1",
-        "location": "gold1"
+        "name": "100K Total",
+        "location": "100ktotal"
     },
     {
-        "name": "Gold 2",
-        "location": "gold2"
+        "name": "10K Total",
+        "location": "10ktotal"
     },
     {
-        "name": "Gold 3",
-        "location": "gold3"
+        "name": "2.5K Total",
+        "location": "2.5ktotal"
     },
     {
-        "name": "Silver 1",
-        "location": "silver1"
+        "name": "5K Total",
+        "location": "5ktotal"
     },
     {
-        "name": "Silver 2",
-        "location": "silver2"
+        "name": "7.5K Total",
+        "location": "7.5ktotal"
     },
     {
-        "name": "Silver 3",
-        "location": "silver3"
+        "name": "Block Party",
+        "location": "blockparty"
     },
     {
-        "name": "Silver 4",
-        "location": "silver4"
+        "name": "Community Builder",
+        "location": "communitybuilder"
     },
     {
-        "name": "Bronze 1",
-        "location": "bronze1"
+        "name": "DED Runner",
+        "location": "dedrunner"
     },
     {
-        "name": "Bronze 2",
-        "location": "bronze2"
+        "name": "DED Sprinter",
+        "location": "dedsprinter"
     },
     {
-        "name": "Bronze 3",
-        "location": "bronze3"
+        "name": "DED Walker",
+        "location": "dedwalker"
     },
     {
-        "name": "Bronze 4",
-        "location": "bronze4"
+        "name": "First Friend",
+        "location": "firstfriend"
+    },
+    {
+        "name": "First Workout",
+        "location": "firstworkout"
+    },
+    {
+        "name": "Global Leaderboard",
+        "location": "globalleaderboard"
+    },
+    {
+        "name": "On The Board",
+        "location": "ontheboard"
+    },
+    {
+        "name": "Runner",
+        "location": "runner"
+    },
+    {
+        "name": "Running Master",
+        "location": "runningmaster"
+    },
+    {
+        "name": "Social Circle",
+        "location": "socialcircle"
+    },
+    {
+        "name": "Sprinter",
+        "location": "sprinter"
+    },
+    {
+        "name": "Sprint Master",
+        "location": "sprintmaster"
+    },
+    {
+        "name": "Walker",
+        "location": "walker"
+    },
+    {
+        "name": "Walk Master",
+        "location": "walkmaster"
+    },
+    {
+        "name": "Welcome To MotionSync",
+        "location": "welcometomotionsync"
+    },
+    {
+        "name": "Workout Enthusiast",
+        "location": "workoutenth"
+    },
+    {
+        "name": "Workout Legend",
+        "location": "workoutlegend"
+    },
+    {
+        "name": "Workout Veteran",
+        "location": "workoutveteran"
     }
 ]

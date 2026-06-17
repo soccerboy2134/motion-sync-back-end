@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\achievements\AchievementProgress;
 use App\Models\Leaderboard;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Laravel\Sanctum\Sanctum;
 
 class LeaderboardSeeder extends Seeder
 {
@@ -30,6 +32,15 @@ class LeaderboardSeeder extends Seeder
                 'position' => $user->workouts_sum_points, 
                 'increment' => $increment
             ]);
+
+            // Give them achievements
+            Sanctum::actingAs($user);
+            AchievementProgress::progressChain('leaderboard-entered', 1);
         }
+
+        // Get top user 
+        $topUser = $topUsers->first();
+        Sanctum::actingAs($topUser);
+        AchievementProgress::progress('leaderboard-global-1', 1, $topUser->id);
     }
 }

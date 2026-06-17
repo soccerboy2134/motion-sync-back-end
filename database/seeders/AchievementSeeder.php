@@ -5,10 +5,13 @@ namespace Database\Seeders;
 use App\Models\achievements\Achievement;
 use App\Models\achievements\AchievementChainChild;
 use App\Models\achievements\AchievementChainParent;
+use App\Models\achievements\AchievementProgress;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 
 class AchievementSeeder extends Seeder
 {
@@ -62,6 +65,14 @@ class AchievementSeeder extends Seeder
                     'achievement_id' => $achievement->id,
                 ]);
             }
+        }
+
+        // Give every user the welcome achievement
+        // AchievementProgress::progress('join-motionsync', 0, 1);
+        $users = User::all();
+        foreach ($users as $user) {
+            Sanctum::actingAs($user);
+            AchievementProgress::progress('join-motionsync', 1);
         }
     }
 }

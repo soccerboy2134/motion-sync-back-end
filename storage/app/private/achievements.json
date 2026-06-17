@@ -4,8 +4,8 @@
     "Slug": "join-motionsync",
     "Description": "Join MotionSync and start your fitness journey.",
     "points": 1,
-    "unlocks": 1,
-    "badge": 4
+    "unlocks": 3,
+    "badge": 22
   },
   {
     "Name": "First Workout",
@@ -13,8 +13,8 @@
     "Description": "Complete 1 workout.",
     "chain": "workouts",
     "points": 1,
-    "unlocks": 1,
-    "badge": 9
+    "unlocks": 8,
+    "badge": 12
   },
   {
     "Name": "Workout Enthusiast",
@@ -22,8 +22,8 @@
     "Description": "Complete 10 workouts.",
     "chain": "workouts",
     "points": 10,
-    "unlocks": 1,
-    "badge": 9
+    "unlocks": 4,
+    "badge": 23
   },
   {
     "Name": "Workout Veteran",
@@ -31,8 +31,8 @@
     "Description": "Complete 100 workouts.",
     "chain": "workouts",
     "points": 100,
-    "unlocks": 1,
-    "badge": 5
+    "unlocks": 9,
+    "badge": 25
   },
   {
     "Name": "Workout Legend",
@@ -41,7 +41,7 @@
     "chain": "workouts",
     "points": 1000,
     "unlocks": 1,
-    "badge": 10
+    "badge": 24
   },
   {
     "Name": "2.5K Total Distance",
@@ -49,8 +49,8 @@
     "Description": "Reach a total distance of 2,500 across all workouts.",
     "chain": "total-distance",
     "points": 2500,
-    "unlocks": 1,
-    "badge": 11
+    "unlocks": 5,
+    "badge": 3
   },
   {
     "Name": "5K Total Distance",
@@ -58,8 +58,8 @@
     "Description": "Reach a total distance of 5,000 across all workouts.",
     "chain": "total-distance",
     "points": 5000,
-    "unlocks": 1,
-    "badge": 11
+    "unlocks": 2,
+    "badge": 4
   },
   {
     "Name": "7.5K Total Distance",
@@ -67,8 +67,8 @@
     "Description": "Reach a total distance of 7,500 across all workouts.",
     "chain": "total-distance",
     "points": 7500,
-    "unlocks": 1,
-    "badge": 7
+    "unlocks": 10,
+    "badge": 5
   },
   {
     "Name": "10K Total Distance",
@@ -76,8 +76,8 @@
     "Description": "Reach a total distance of 10,000 across all workouts.",
     "chain": "total-distance",
     "points": 10000,
-    "unlocks": 1,
-    "badge": 7
+    "unlocks": 6,
+    "badge": 2
   },
   {
     "Name": "100K Total Distance",
@@ -85,8 +85,8 @@
     "Description": "Reach a total distance of 100,000 across all workouts.",
     "chain": "total-distance",
     "points": 100000,
-    "unlocks": 1,
-    "badge": 3
+    "unlocks": 7,
+    "badge": 1
   },
   {
     "Name": "Walker",
@@ -94,8 +94,8 @@
     "Description": "Complete 10 walks.",
     "chain": "walks",
     "points": 10,
-    "unlocks": 1,
-    "badge": 12
+    "unlocks": 2,
+    "badge": 20
   },
   {
     "Name": "Dedicated Walker",
@@ -103,8 +103,8 @@
     "Description": "Complete 100 walks.",
     "chain": "walks",
     "points": 100,
-    "unlocks": 1,
-    "badge": 8
+    "unlocks": 5,
+    "badge": 10
   },
   {
     "Name": "Walking Master",
@@ -112,8 +112,8 @@
     "Description": "Complete 1,000 walks.",
     "chain": "walks",
     "points": 1000,
-    "unlocks": 1,
-    "badge": 4
+    "unlocks": 9,
+    "badge": 21
   },
   {
     "Name": "Runner",
@@ -121,8 +121,8 @@
     "Description": "Complete 10 runs.",
     "chain": "runs",
     "points": 10,
-    "unlocks": 1,
-    "badge": 12
+    "unlocks": 6,
+    "badge": 15
   },
   {
     "Name": "Dedicated Runner",
@@ -130,7 +130,7 @@
     "Description": "Complete 100 runs.",
     "chain": "runs",
     "points": 100,
-    "unlocks": 1,
+    "unlocks": 4,
     "badge": 8
   },
   {
@@ -140,7 +140,7 @@
     "chain": "runs",
     "points": 1000,
     "unlocks": 1,
-    "badge": 4
+    "badge": 16
   },
   {
     "Name": "Sprinter",
@@ -148,8 +148,8 @@
     "Description": "Complete 10 sprints.",
     "chain": "sprints",
     "points": 10,
-    "unlocks": 1,
-    "badge": 12
+    "unlocks": 8,
+    "badge": 18
   },
   {
     "Name": "Dedicated Sprinter",
@@ -157,8 +157,8 @@
     "Description": "Complete 100 sprints.",
     "chain": "sprints",
     "points": 100,
-    "unlocks": 1,
-    "badge": 8
+    "unlocks": 3,
+    "badge": 9
   },
   {
     "Name": "Sprint Master",
@@ -166,8 +166,8 @@
     "Description": "Complete 1,000 sprints.",
     "chain": "sprints",
     "points": 1000,
-    "unlocks": 1,
-    "badge": 4
+    "unlocks": 10,
+    "badge": 19
   },
   {
     "Name": "Global Champion",
@@ -175,8 +175,8 @@
     "Description": "Reach #1 on the global leaderboard.",
     "chain": "leaderboard",
     "points": 1,
-    "unlocks": 1,
-    "badge": 4
+    "unlocks": 7,
+    "badge": 13
   },
   {
     "Name": "On the Board",
@@ -184,16 +184,16 @@
     "Description": "Enter the leaderboard for the first time.",
     "chain": "leaderboard",
     "points": 1,
-    "unlocks": 1,
-    "badge": 4
+    "unlocks": 2,
+    "badge": 14
   },
   {
     "Name": "Block Party",
     "Slug": "block-user",
     "Description": "Block a user.",
     "points": 1,
-    "unlocks": 1,
-    "badge": 4
+    "unlocks": 5,
+    "badge": 6
   },
   {
     "Name": "First Friend",
@@ -201,7 +201,7 @@
     "Description": "Add your first friend.",
     "chain": "friends",
     "points": 1,
-    "unlocks": 1,
+    "unlocks": 3,
     "badge": 11
   },
   {
@@ -210,8 +210,8 @@
     "Description": "Add 10 friends.",
     "chain": "friends",
     "points": 10,
-    "unlocks": 1,
-    "badge": 7
+    "unlocks": 8,
+    "badge": 17
   },
   {
     "Name": "Community Builder",
@@ -219,7 +219,7 @@
     "Description": "Add 100 friends.",
     "chain": "friends",
     "points": 100,
-    "unlocks": 1,
-    "badge": 3
+    "unlocks": 10,
+    "badge": 7
   }
 ]
