@@ -18,11 +18,27 @@ class FriendController extends Controller
     public function index() {
         $user = Auth::user();
 
+        // return friend and the user
         $friendships = Friend::query()
             ->where('sender', $user->id)
             ->orWhere('receiver', $user->id)
+            ->with(['senderUser', 'receiverUser'])
             ->get()
             ->groupBy('status');
+
+        // Filter out where sender or receiveruser is the user themselves
+        $friendships = $friendships->map(function ($group) use ($user) {
+            return $group->map(function ($friendship) use ($user) {
+                if ($friendship->senderUser->id === $user->id) {
+                    $friendship->friend = $friendship->receiverUser;
+                } else {
+                    $friendship->friend = $friendship->senderUser;
+                }
+                unset($friendship->senderUser);
+                unset($friendship->receiverUser);
+                return $friendship;
+            });
+        });
 
         return $friendships;
     }

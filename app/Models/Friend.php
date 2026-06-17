@@ -49,4 +49,12 @@ class Friend extends Model
     public function user() {
         return $this->belongsToMany(User::class);
     }
+
+    public function senderUser() {
+        return $this->belongsTo(User::class, 'sender');
+    }
+
+    public function receiverUser() {
+        return $this->belongsTo(User::class, 'receiver');
+    }
 }
