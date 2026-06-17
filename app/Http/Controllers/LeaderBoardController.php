@@ -74,8 +74,17 @@ class LeaderBoardController extends Controller
             ], 400);
         }
 
+        $userIds = [];
+        foreach ($friendships as $friendship) {
+            if ($friendship->sender == $user->id) {
+                $userIds[] = $friendship->receiver;
+            } else {
+                $userIds[] = $friendship->sender;
+            }
+        }
+
         $users = \App\Models\User::withSum('workouts', 'points')
-        ->whereIn('id', $friendships->pluck('id')->all())
+        ->whereIn('id', $userIds)
         ->orderByDesc('workouts_sum_points')
         ->get();
         
