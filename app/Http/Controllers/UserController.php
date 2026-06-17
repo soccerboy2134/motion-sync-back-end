@@ -16,7 +16,8 @@ class UserController extends Controller
 {
     // Responses should be standardised, but theres a bit more before that (mainly modifying the login route?)
 
-    public function index() {
+    public function index()
+    {
         $id = Auth::user()->id;
 
         // $user = \App\Models\User::withSum('workouts', 'points')
@@ -98,16 +99,24 @@ class UserController extends Controller
         $user = User::find($id);
         if ($user->visibility == true || $user->id == Auth::user()->id) {
             $user->achievements = Achievement::getAchievementsWithProgress($id);
+
+            $points = 0;
+            $workouts = WorkOut::where('user_id', $id)->get();
+            foreach ($workouts as $workout) {
+                $points += $workout['points'];
+            }
+            
+            $user->workouts_sum_points = $points;
             return $user;
-        }
-        else {
+        } else {
             return response()->json([
                 'message' => "This user's profile is private."
             ], 403);
         }
     }
 
-    public function search(string $query) {
+    public function search(string $query)
+    {
         $users = User::where('display_name', 'like', '%' . $query . '%')->get();
         return $users;
     }
@@ -118,7 +127,7 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, string $id)
     {
         $request = $request->validated();
-        
+
         $user = User::find($id);
         $user->update($request);
 
