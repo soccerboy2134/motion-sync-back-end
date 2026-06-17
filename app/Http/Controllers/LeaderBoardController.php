@@ -78,6 +78,12 @@ class LeaderBoardController extends Controller
         ->whereIn('id', $friendships->pluck('id')->all())
         ->orderByDesc('workouts_sum_points')
         ->get();
+        
+        foreach ($users as $user) {
+            if ($user->workouts_sum_points == null) {
+                $user->workouts_sum_points = 0;
+            }
+        }
 
         $entries = [];
         foreach ($users as $user) {
