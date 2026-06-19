@@ -79,7 +79,7 @@ test('Update accepts unfriend block and unblock', function () {
     ]);
     // Alice accepts
     Sanctum::actingAs($alice);
-    $accept = $this->putJson('/api/friend', [
+    $accept = $this->patchJson('/api/friend', [
         'user_id' => $bob->id,
         'status' => 'accepted',
     ]);
@@ -106,7 +106,7 @@ test('Update accepts unfriend block and unblock', function () {
     ]);
 
     // Alice unfriends Bob
-    $unfriend = $this->putJson('/api/friend', [
+    $unfriend = $this->patchJson('/api/friend', [
         'user_id' => $bob->id,
         'status' => 'unfriend',
     ]);
@@ -118,7 +118,7 @@ test('Update accepts unfriend block and unblock', function () {
         'receiver' => $alice->id,
     ]);
     // Alice blocks Bob
-    $block = $this->putJson('/api/friend', [
+    $block = $this->patchJson('/api/friend', [
         'user_id' => $bob->id,
         'status' => 'block',
     ]);
@@ -144,7 +144,7 @@ test('Update accepts unfriend block and unblock', function () {
     ]);
 
     // Alice unblocks Bob
-    $unblock = $this->putJson('/api/friend', [
+    $unblock = $this->patchJson('/api/friend', [
         'user_id' => $bob->id,
         'status' => 'unblock',
     ]);

@@ -6,6 +6,7 @@ use App\Models\achievements\AchievementProgress;
 use App\Models\User;
 use App\Models\WorkOut;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\Sanctum;
 
 /**
@@ -41,8 +42,9 @@ class WorkOutFactory extends Factory
         };
 
         $points = round(($length * $speed * $multiplier) / 100);
+        $userId = fake()->numberBetween(1, 100);
 
-        $user = User::find(fake()->numberBetween(1, 100));
+        $user = User::find($userId);
         Sanctum::actingAs($user);
 
         AchievementProgress::progressChain('workout', 1);

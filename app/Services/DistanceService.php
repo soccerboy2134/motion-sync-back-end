@@ -19,9 +19,9 @@ class DistanceService
             throw new Exception("Array too small");
         }
 
-        Log::info("----START BAD COORDS-----");
-        Log::info(json_encode($coords, JSON_PRETTY_PRINT));
-        Log::info("----END BAD COORDS-----");
+        // Log::info("----START BAD COORDS-----");
+        // Log::info(json_encode($coords, JSON_PRETTY_PRINT));
+        // Log::info("----END BAD COORDS-----");
 
         $coords = DistanceService::removeDuplicates($coords);
         $results = [];
@@ -95,12 +95,12 @@ class DistanceService
 
         array_push($results, $finalResult);
 
-        Log::info("-----START GOOD COORDS-----");
-        Log::info(now());
-        Log::info(json_encode($results, JSON_PRETTY_PRINT));
-        Log::info("===MIDDLE SECTION COORDS===");
-        Log::info(json_encode($coords, JSON_PRETTY_PRINT));
-        Log::info("-----END GOOD COORDS-----");
+        // Log::info("-----START GOOD COORDS-----");
+        // Log::info(now());
+        // Log::info(json_encode($results, JSON_PRETTY_PRINT));
+        // Log::info("===MIDDLE SECTION COORDS===");
+        // Log::info(json_encode($coords, JSON_PRETTY_PRINT));
+        // Log::info("-----END GOOD COORDS-----");
         return $results;
     }
 

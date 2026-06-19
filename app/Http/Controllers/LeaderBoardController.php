@@ -43,7 +43,7 @@ class LeaderBoardController extends Controller
 
             AchievementProgress::progress('leaderboard-entered', 1, $user->id);
         }
-        Log::info(AchievementProgress::all());
+        
         $leaderboard = Leaderboard::where('increment',$increment)->get();
         return $leaderboard;
     }

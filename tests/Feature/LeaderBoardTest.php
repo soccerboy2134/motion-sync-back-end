@@ -1,11 +1,14 @@
 <?php
 
+use App\Models\achievements\Achievement;
+use App\Models\achievements\AchievementProgress;
 use App\Models\Leaderboard as LeaderboardModel;
 use App\Models\User;
 use App\Models\WorkOut;
-use App\Models\achievements\Achievement;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Sanctum\Sanctum;
 
@@ -19,6 +22,7 @@ test('Migrations include leaderboards', function () {
 
 test('Store creates leaderboard entries for admin and forbids non-admins', function () {
     Artisan::call('migrate:fresh');
+    $this->seed(Database\Seeders\DatabaseSeeder::class);
 
     // create users with workouts
     $user1 = User::factory()->create();
@@ -47,75 +51,46 @@ test('Store creates leaderboard entries for admin and forbids non-admins', funct
     $resp2 = $this->postJson('/api/leaderboard');
     $resp2->assertStatus(200);
     $this->assertDatabaseHas('leaderboards', ['increment' => 1]);
-
-    // Top user should receive the global leaderboard achievement
-    $global = Achievement::where('slug', 'leaderboard-global-1')->first();
-    $entered = Achievement::where('slug', 'leaderboard-entered')->first();
-    $this->assertDatabaseHas('achievement_progress', [
-        'user_id' => $user2->id,
-        'achievement_id' => $global->id,
-        'is_unlocked' => true,
-    ]);
-
-    // Assert unlocked skin
-    $this->assertDatabaseHas('unlocked_skins', [
-        'user_id' => $user2->id,
-        'skin_id' => $global->skin_id,
-    ]);
-
-    // All users entered should have the 'entered' achievement
-    foreach ([$user1->id, $user2->id, $user3->id] as $uid) {
-        $this->assertDatabaseHas('achievement_progress', [
-            'user_id' => $uid,
-            'achievement_id' => $entered->id,
-            'is_unlocked' => true,
-        ]);
-
-        // Assert skins
-        $this->assertDatabaseHas('unlocked_skins', [
-            'user_id' => $uid,
-            'skin_id' => $entered->skin_id,
-        ]);
-    }
 });
 
 test('showGlobal returns latest leaderboard entries', function () {
     Artisan::call('migrate:fresh');
 
-    $userA = User::factory()->create();
-    $userB = User::factory()->create();
-
-    WorkOut::factory()->create(['user_id' => $userA->id, 'points' => 300]);
-    WorkOut::factory()->create(['user_id' => $userB->id, 'points' => 150]);
+    // Seed the database 
+    $this->seed(Database\Seeders\DatabaseSeeder::class);
 
     $admin = User::factory()->create(['role' => 'admin']);
-    
-    // Seed achievements used by LeaderBoardController
-    $this->seed(\Database\Seeders\AchievementSeeder::class);
-    $this->seed(\Database\Seeders\BadgeSeeder::class);
-    $this->seed(\Database\Seeders\SkinSeeder::class);
 
     Sanctum::actingAs($admin);
-    $this->postJson('/api/leaderboard')->assertStatus(200)->assertJsonCount(3);
+    $this->postJson('/api/leaderboard')->assertStatus(200)->assertJsonCount(10);
 
     $global = Achievement::where('slug', 'leaderboard-global-1')->first();
     $entered = Achievement::where('slug', 'leaderboard-entered')->first();
 
+    // $users = LeaderboardModel::orderBy('position', 'asc')->take(10)->get();
+    $latest = LeaderboardModel::latest();
+    $increment = $latest->first()?->increment;
+
+    $users = LeaderboardModel::where('increment', $increment)
+        ->orderByDesc('position')
+        ->pluck('user_id')
+        ->toArray();
+    
     // Top user (userA) should have the global achievement
     $this->assertDatabaseHas('achievement_progress', [
-        'user_id' => $userA->id,
+        'user_id' => $users[0],
         'achievement_id' => $global->id,
         'is_unlocked' => true,
     ]);
 
     // Assert skin for global achievement
     $this->assertDatabaseHas('unlocked_skins', [
-        'user_id' => $userA->id,
+        'user_id' => $users[0],
         'skin_id' => $global->skin_id,
     ]);
 
     // All users returned (userA, userB, admin) should have the 'entered' achievement
-    foreach ([$userA->id, $userB->id, $admin->id] as $uid) {
+    foreach ($users as $uid) {
         $this->assertDatabaseHas('achievement_progress', [
             'user_id' => $uid,
             'achievement_id' => $entered->id,
